@@ -104,7 +104,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   alignment: Alignment.center,
                   child: TextField(
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Enter your mobile Number',
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tifac/screens/report_display.dart';
 import 'package:tifac/services/report_services.dart';
 import 'package:tifac/models/reportmodel.dart';
 import 'utilities/drawer.dart';
@@ -50,9 +51,22 @@ class _ReportsState extends State<Reports> {
                           title: Text(report.reportname),
                           subtitle: Text(report.price),
                           leading: Image.network(report.reportimagepath),
+                          onTap: () {
+                            _OpenReport(context, report);
+                          },
                         );
-                      }),
+                      },
+                    ),
             ),
+    );
+  }
+
+  void _OpenReport(BuildContext context, Report report) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (builder) => ReportPage(report: report,),
+      ),
     );
   }
 }
