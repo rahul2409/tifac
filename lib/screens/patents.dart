@@ -12,9 +12,17 @@ class Patents extends StatefulWidget {
 class _PatentsState extends State<Patents> {
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(title: Text('Patent Filing'),),
       drawer: DrawerTifac(),
+      body: Container(
+        child: Center(
+          child: Text('Coming Soon...', style: TextStyle(fontSize: height/20),),
+        ),
+      ),
     );
   }
 }
