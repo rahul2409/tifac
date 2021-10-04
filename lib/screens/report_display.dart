@@ -13,6 +13,25 @@ class ReportPage extends StatelessWidget {
       appBar: AppBar(
         title: Text(report.reportname),
       ),
+      bottomNavigationBar: BottomAppBar(
+        child: Container(
+          height: 80,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text('Price of the report - Rs.${report.price}'),
+              MaterialButton(
+                child: Text(
+                  'Purchase',
+                  style: TextStyle(color: Colors.white),
+                ),
+                color: Colors.blue,
+                onPressed: () {},
+              ),
+            ],
+          ),
+        ),
+      ),
       body: Container(
         height: height,
         child: ListView(
@@ -33,6 +52,14 @@ class ReportPage extends StatelessWidget {
                 height: height / 3,
               ),
             ),
+            ListTile(
+              title: Text('Year Of Publishing '),
+              trailing: Text(report.yearofpublication),
+            ),
+            ListTile(
+              title: Text('Category Of Report'),
+              trailing: Text(report.category),
+            ),
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: ExpansionTile(
@@ -41,10 +68,6 @@ class ReportPage extends StatelessWidget {
                   Text(report.excerpt),
                 ],
               ),
-            ),
-            ListTile(
-              title: Text('Year Of Publishing '),
-              trailing: Text(report.yearofpublication),
             ),
             
           ],
