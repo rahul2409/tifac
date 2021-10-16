@@ -12,9 +12,8 @@ class _MyAccountState extends State<MyAccount> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('My Account'),),
-      drawer: DrawerTifac(),
-      
+      appBar: AppBar(title: const Text('My Account'),),
+      drawer: const DrawerTifac(),
     );
   }
 }

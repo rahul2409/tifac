@@ -20,10 +20,10 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Join As an Expert'),
+        title: const Text('Join As an Expert'),
       ),
-      drawer: DrawerTifac(),
-      body: Container(
+      drawer: const DrawerTifac(),
+      body: SizedBox(
         height: height,
         width: width,
         child: ListView(
@@ -39,7 +39,7 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                 width: width - 30,
                 alignment: Alignment.center,
                 child: TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your name',
                   ),
@@ -61,7 +61,7 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                 alignment: Alignment.center,
                 child: TextField(
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your email address',
                   ),
@@ -82,7 +82,7 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                 alignment: Alignment.center,
                 child: TextField(
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your mobile number',
                   ),
@@ -104,7 +104,7 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                 alignment: Alignment.center,
                 child: TextField(
                   maxLines: 4,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your Address',
                   ),
@@ -160,9 +160,9 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                 width: width - 30,
                 alignment: Alignment.center,
                 child: MaterialButton(
-                  onPressed: () => _OnPressedJoinAsExpert(),
+                  onPressed: () => onPressedJoinAsExpert(),
                   color: Colors.blue,
-                  child: Text(
+                  child: const Text(
                     'Join as Expert',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -175,5 +175,5 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
     );
   }
 
-  void _OnPressedJoinAsExpert() {}
+  void onPressedJoinAsExpert() {}
 }

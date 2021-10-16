@@ -26,31 +26,29 @@ class _HomeScreenState extends State<HomeScreen> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('TIFAC'),
+        title: const Text('TIFAC'),
       ),
-      drawer: DrawerTifac(),
-      body: Container(
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Column(
-            children: [
-              // Image Of the Login Screen
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  top: 40,
-                  right: 20,
-                ),
-                child: Container(
-                    alignment: Alignment.center,
-                    child: Image.asset(
-                      'assets/tifac_logo.png',
-                      height: height / 4,
-                      width: width / 2,
-                    )),
+      drawer: const DrawerTifac(),
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: [
+            // Image Of the Login Screen
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 20,
+                top: 40,
+                right: 20,
               ),
-            ],
-          ),
+              child: Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/tifac_logo.png',
+                    height: height / 4,
+                    width: width / 2,
+                  )),
+            ),
+          ],
         ),
       ),
     );

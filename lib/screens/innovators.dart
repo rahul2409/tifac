@@ -10,21 +10,21 @@ class JoinAsInnovators extends StatefulWidget {
 }
 
 class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
-  @override
   double height = 0;
   double width = 0;
   String name = "";
   String categoryChoice = "One";
   bool alreadyApplied = false;
+  @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Join As an Innovator'),
+        title: const Text('Join As an Innovator'),
       ),
-      drawer: DrawerTifac(),
-      body: Container(
+      drawer: const DrawerTifac(),
+      body: SizedBox(
         height: height,
         width: width,
         child: ListView(
@@ -40,7 +40,7 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                 width: width - 30,
                 alignment: Alignment.center,
                 child: TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your name',
                   ),
@@ -62,7 +62,7 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                 alignment: Alignment.center,
                 child: TextField(
                   keyboardType: TextInputType.emailAddress,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your email address',
                   ),
@@ -83,7 +83,7 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                 alignment: Alignment.center,
                 child: TextField(
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your mobile number',
                   ),
@@ -103,7 +103,7 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                 width: width - 30,
                 alignment: Alignment.center,
                 child: TextField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Your Innovation details',
                   ),
@@ -124,7 +124,7 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                 alignment: Alignment.center,
                 child: TextField(
                   maxLines: 4,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Enter your Address',
                   ),
@@ -183,13 +183,13 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                   children: [
                     Checkbox(
                       value: alreadyApplied,
-                      onChanged: (bool? Alreadyapplied) {
+                      onChanged: (bool? alreadyApply) {
                         setState(() {
-                          alreadyApplied = Alreadyapplied!;
+                          alreadyApplied = alreadyApply!;
                         });
                       },
                     ),
-                    Text('Already Applied?'),
+                    const Text('Already Applied?'),
                   ],
                 ),
               ),
@@ -204,9 +204,9 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                 width: width - 30,
                 alignment: Alignment.center,
                 child: MaterialButton(
-                  onPressed: () => _OnPressedJoinAsInnovator(),
+                  onPressed: () => onPressedJoinAsInnovators(),
                   color: Colors.blue,
-                  child: Text(
+                  child: const Text(
                     'Join as Innovators',
                     style: TextStyle(color: Colors.white),
                   ),
@@ -219,5 +219,5 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
     );
   }
 
-  void _OnPressedJoinAsInnovator() {}
+  void onPressedJoinAsInnovators() {}
 }
