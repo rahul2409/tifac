@@ -35,7 +35,7 @@ class _ReportsState extends State<Reports> {
       ),
       drawer: const DrawerTifac(),
       body: _loading
-          ? Center(
+          ? const Center(
               child: CircularProgressIndicator(),
             )
           : Container(

@@ -10,12 +10,12 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
     UserModel({
-        required this.success,
-        required this.userid,
-        required this.name,
-        required this.mobile,
-        required this.email,
-        required this.city,
+        this.success = 0,
+        this.userid = 0,
+        this.name = "",
+        this.mobile = "",
+        this.email = "",
+        this.city = "",
     });
 
     int success;
