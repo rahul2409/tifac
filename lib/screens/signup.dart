@@ -10,146 +10,146 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  @override
   String name = "";
   String email = "";
   String number = "";
   double height = 0;
   bool apiCall = false;
+  @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     if (apiCall) {
-      return CircularProgressIndicator();
+      return const Center(child: CircularProgressIndicator());
     } else {
       return Scaffold(
-        body: Container(
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: [
-                // Image Of the Login Screen
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    top: 40,
-                    right: 20,
-                  ),
-                  child: Container(
-                      alignment: Alignment.center,
-                      child: Image.asset(
-                        'assets/tifac_logo.png',
-                        height: height / 4,
-                        width: width / 2,
-                      )),
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              // Image Of the Login Screen
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  top: 40,
+                  right: 20,
                 ),
-                // Register Note.
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                  ),
-                  child: Container(
+                child: Container(
                     alignment: Alignment.center,
-                    child: Text(
-                      "Sign In for TIFAC",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w400,
-                        fontSize: height * 0.04,
-                      ),
-                    ),
-                  ),
+                    child: Image.asset(
+                      'assets/tifac_logo.png',
+                      height: height / 4,
+                      width: width / 2,
+                    )),
+              ),
+              // Register Note.
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
                 ),
-                // Input field for mobile number
-                Padding(
-                  padding: const EdgeInsets.only(
-                    left: 20,
-                    right: 20,
-                    top: 12,
-                  ),
-                  child: Container(
-                    width: width - 30,
-                    alignment: Alignment.center,
-                    child: TextField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Enter your registered mobile Number',
-                      ),
-                      onChanged: (text) {
-                        number = text;
-                      },
-                    ),
-                  ),
-                ),
-
-                SizedBox(
-                  height: height / 10,
-                ),
-                // Register Button
-                Container(
+                child: Container(
                   alignment: Alignment.center,
-                  child: MaterialButton(
-                    onPressed: () => _OnPressedSendOTP(),
-                    color: Colors.blue,
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                        top: 10,
-                        bottom: 10,
-                      ),
-                      child: Text(
-                        "Get OTP",
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w300,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                    minWidth: width / 2,
-                  ),
-                ),
-                // Already Have an account? sign in using OTP.
-                Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Container(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text('New User?'),
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text('Register Here.'),
-                        ),
-                      ],
+                  child: Text(
+                    "Sign In for TIFAC",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: height * 0.04,
                     ),
                   ),
                 ),
-              ],
-            ),
+              ),
+              // Input field for mobile number
+              Padding(
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  top: 12,
+                ),
+                child: Container(
+                  width: width - 30,
+                  alignment: Alignment.center,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Enter your registered mobile Number',
+                    ),
+                    onChanged: (text) {
+                      number = text;
+                    },
+                  ),
+                ),
+              ),
+
+              SizedBox(
+                height: height / 10,
+              ),
+              // Register Button
+              Container(
+                alignment: Alignment.center,
+                child: MaterialButton(
+                  onPressed: () {
+                    // ignore: todo
+                    // TODO: Get OTP. Check the api call and sign in the user use shared preference.
+                    // _OnPressedSendOTP();
+                  },
+                  color: Colors.blue,
+                  child: const Padding(
+                    padding:  EdgeInsets.only(
+                      top: 10,
+                      bottom: 10,
+                    ),
+                    child: Text(
+                      "Get OTP",
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                  minWidth: width / 2,
+                ),
+              ),
+              // Already Have an account? sign in using OTP.
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('New User?'),
+                    MaterialButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Register Here.'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       );
     }
   }
 
-  void _OnPressedSendOTP() {
+  void onPressedSendOTP() {
     // API call to fetch the otp and save it in pin.
     setState(() {
       apiCall = true;
     });
     // Function call to get the the OTP
-    _GetOTP();
+    getOTP();
     showModalBottomSheet(
       context: context,
       builder: (context) {
-        return Container(
+        return SizedBox(
           height: height / 3,
           child: Column(
             children: [
-              Padding(
+              const Padding(
                 padding: EdgeInsets.only(
                   top: 40.0,
                 ),
@@ -166,7 +166,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         context: context,
                         builder: (context) {
                           return AlertDialog(
-                            title: Text('Pin'),
+                            title: const Text('Pin'),
                             content: Text('Pin entered as $pin'),
                           );
                         });
@@ -179,7 +179,7 @@ class _SignUpPageState extends State<SignUpPage> {
       },
     );
   }
-  void _GetOTP(){
+  void getOTP(){
     
   }
 }
