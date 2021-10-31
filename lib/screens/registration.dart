@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -173,6 +175,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             await onPressedRegister(name, email, city, number);
                         print("Response arrived successful with success = ${response.success} and userID ${response.userid}");
                         // Need to set shared preference.
+                        setState(() {
+                          loading = false;
+                        });
                         if (response.success == 1) {
                           Navigator.pushReplacement(
                             context,
@@ -256,12 +261,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Future<UserModelRegister> onPressedRegister(
       String name, String email, String city, String number) async {
     final String apiUrl = "https://tifac.wipurl.com/index.php/signup";
-    final response = await http.post(Uri.parse(apiUrl), body: {
+    Map bodyRegistration = {
       "name": name,
       "email": email,
       "city": city,
       "username": number,
-    });
+    };
+    final response = await http.post(Uri.parse(apiUrl), body:jsonEncode(bodyRegistration));
+    print("name : ${name}, email: ${email}, city: ${city}, username: ${number} ");
     if (response.statusCode == 200) {
       print("Status 200 reached. response is being processed..");
       final responseString = response.body;

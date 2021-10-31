@@ -1,6 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
 import 'package:pin_entry_text_field/pin_entry_text_field.dart';
+import 'package:tifac/models/usermodel.dart';
+import 'package:http/http.dart' as http;
+import 'package:tifac/screens/homescreen.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -89,14 +94,38 @@ class _SignUpPageState extends State<SignUpPage> {
               Container(
                 alignment: Alignment.center,
                 child: MaterialButton(
-                  onPressed: () {
+                  onPressed: () async {
+                    setState(() {
+                      apiCall = true;
+                    });
                     // ignore: todo
                     // TODO: Get OTP. Check the api call and sign in the user use shared preference.
                     // _OnPressedSendOTP();
+                    UserModel response = await signInUser("91"+number);
+                    setState(() {
+                      apiCall = false;
+                    });
+                    if (response.success == 1) {
+                      // Add shared preference
+                      print("name ${response.name}, email: ${response.email}, userID:${response.userid}");
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => const HomeScreen(),
+                        ),
+                      );
+                    } else {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => const SignUpPage(),
+                        ),
+                      );
+                    }
                   },
                   color: Colors.blue,
                   child: const Padding(
-                    padding:  EdgeInsets.only(
+                    padding: EdgeInsets.only(
                       top: 10,
                       bottom: 10,
                     ),
@@ -133,6 +162,34 @@ class _SignUpPageState extends State<SignUpPage> {
         ),
       );
     }
+  }
+
+  Future<UserModel> signInUser(String number) async {
+    String apiUrl = "https://tifac.wipurl.com/index.php/signin";
+    print(number);
+    Map encodeNumber = {
+      "username": number,
+    };
+    print(jsonEncode(encodeNumber));
+    final response = await http.post(Uri.parse(apiUrl), body: jsonEncode(encodeNumber));
+
+    if (response.statusCode == 200) {
+      // The response is okay and can be processed.
+      print(response.toString());
+      final responseString = response.body;
+      print(responseString);
+      final userModelFromResponse = userModelFromJson(responseString);
+      print(userModelFromResponse);
+      if (userModelFromResponse.success == 1) {
+        // UserModel Sign in Successful.
+        return userModelFromResponse;
+      } else {
+        // UsermodelApi hit but sign in failed.
+        return UserModel();
+      }
+    }
+    return UserModel();
+    //Use the post and get the response check the response and return the usermodel.
   }
 
   void onPressedSendOTP() {
@@ -179,7 +236,6 @@ class _SignUpPageState extends State<SignUpPage> {
       },
     );
   }
-  void getOTP(){
-    
-  }
+
+  void getOTP() {}
 }

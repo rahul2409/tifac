@@ -16,4 +16,18 @@ class ReportServices {
     }
     return reports;
   }
+
+  static Future<List<Report>> getReportNames()async{
+    ReportModel reports = ReportModel(reports: [], success: 0);
+    try{
+      final response = await http.get(Uri.parse(url));
+      if(200 == response.statusCode){
+        reports = reportModelFromJson(response.body);
+        return reports.reports;
+      }
+    } catch(err){
+      print("error processing list of reports.");
+    }
+    return reports.reports;
+  }
 }
