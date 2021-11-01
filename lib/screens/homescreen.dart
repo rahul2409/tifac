@@ -26,7 +26,23 @@ class _HomeScreenState extends State<HomeScreen> {
     width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TIFAC'),
+        backgroundColor: Colors.white,
+        foregroundColor: Color.fromRGBO(5, 0, 154, 1),
+        leading: Image.asset('assets/tifac_logo.png'),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Image.asset(
+              'assets/Tifac_icons_logo/Notification_icon.png',
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Image.asset(
+              'assets/Tifac_icons_logo/Profile_icon.png',
+            ),
+          ),
+        ],
       ),
       drawer: const DrawerTifac(),
       body: SingleChildScrollView(
@@ -34,19 +50,22 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             // Image Of the Login Screen
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 20,
-                top: 40,
-                right: 20,
+            Container(
+              padding: const EdgeInsets.all(12.0),
+              color: const Color.fromRGBO(5, 0, 154, 1),
+              child: const ListTile(
+                title: Text(
+                  'TIFAC',
+                  style: TextStyle(color: Colors.white),
+                ),
+                isThreeLine: true,
+                contentPadding: EdgeInsets.all(10),
+                subtitle: Text(
+                  'Technology Information, Forecasting and Assessment Council(TIFAC) is an autonomous body under Department of Science and Technology, Government of India. Since its inception in 1988, TIFAC has been doing significant contribution as a unique knowledge network institution in India.',
+                  style: TextStyle(color: Colors.white),
+                ),
+                leading: Icon(Icons.arrow_right),
               ),
-              child: Container(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    'assets/tifac_logo.png',
-                    height: height / 4,
-                    width: width / 2,
-                  )),
             ),
           ],
         ),
