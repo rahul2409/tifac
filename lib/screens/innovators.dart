@@ -294,12 +294,17 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
       "fieldofinnovation": fieldofinnovation,
       "username": username
     };
-    final response =
-        await http.post(Uri.parse(apiUrl), body: jsonEncode(addInnovator));
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      body: jsonEncode(addInnovator),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
 
     if (response.statusCode == 200) {
       final String responseString = response.body;
-
+      print(responseString);
       return addInnovatorFromJson(responseString);
     } else {
       return AddInnovator(success: 0, userid: 0);
