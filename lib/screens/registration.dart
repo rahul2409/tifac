@@ -173,7 +173,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         });
                         UserModelRegister response =
                             await onPressedRegister(name, email, city, number);
-                        print("Response arrived successful with success = ${response.success} and userID ${response.userid}");
+                        print("Response arrived successful with success = ${response.success} and userID ${response.userid} ${response.toString()}");
                         // Need to set shared preference.
                         setState(() {
                           loading = false;

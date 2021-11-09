@@ -101,13 +101,14 @@ class _SignUpPageState extends State<SignUpPage> {
                     // ignore: todo
                     // TODO: Get OTP. Check the api call and sign in the user use shared preference.
                     // _OnPressedSendOTP();
-                    UserModel response = await signInUser("91"+number);
+                    UserModel response = await signInUser("91" + number);
                     setState(() {
                       apiCall = false;
                     });
                     if (response.success == 1) {
                       // Add shared preference
-                      print("name ${response.name}, email: ${response.email}, userID:${response.userid}");
+                      print(
+                          "name ${response.name}, email: ${response.email}, userID:${response.userid}, email:${response.email}");
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
@@ -171,7 +172,11 @@ class _SignUpPageState extends State<SignUpPage> {
       "username": number,
     };
     print(jsonEncode(encodeNumber));
-    final response = await http.post(Uri.parse(apiUrl), body: jsonEncode(encodeNumber));
+    final response = await http.post(Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(encodeNumber));
 
     if (response.statusCode == 200) {
       // The response is okay and can be processed.

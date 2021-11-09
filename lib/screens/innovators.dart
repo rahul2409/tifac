@@ -36,8 +36,8 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
         : Scaffold(
             appBar: AppBar(
               title: const Text('Join As an Innovator'),
+              backgroundColor: Color.fromRGBO(5, 0, 154, 1),
             ),
-            drawer: const DrawerTifac(),
             body: SizedBox(
               height: height,
               width: width,
@@ -260,7 +260,7 @@ class _JoinAsInnovatorsState extends State<JoinAsInnovators> {
                             );
                           }
                         },
-                        color: Colors.blue,
+                        color: Color.fromRGBO(5, 0, 154, 1),
                         child: const Text(
                           'Join as Innovators',
                           style: TextStyle(color: Colors.white),

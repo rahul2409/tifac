@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tifac/screens/about_tifac.dart';
 import 'package:tifac/screens/account.dart';
 import 'package:tifac/screens/experts.dart';
+import 'package:tifac/screens/futuristic_technologies.dart';
+import 'package:tifac/screens/home.dart';
 import 'package:tifac/screens/innovators.dart';
 import 'package:tifac/screens/patents.dart';
 import 'package:tifac/screens/report.dart';
@@ -21,54 +24,91 @@ class _HomeScreenState extends State<HomeScreen> {
   double height = 0;
   double width = 0;
   String number = "";
+  int _selectedIndex = 0;
+  TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  List _widgetOptions = [
+    const Home(),
+    const Reports(),
+    const Patents(),
+    const Training(),
+    const JoinAsExpert(),
+    const JoinAsInnovators(),
+  ];
+
+  @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+        print(_selectedIndex);
+      });
+    }
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        foregroundColor: Color.fromRGBO(5, 0, 154, 1),
-        leading: Image.asset('assets/tifac_logo.png'),
-        actions: [
-          IconButton(
-            onPressed: () {},
+      body: _widgetOptions[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        backgroundColor: Color.fromRGBO(5, 0, 154, 1),
+        onTap: _onItemTapped,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/Tifac_icons_logo/Notification_icon.png',
+              'assets/Tifac_icons_logo/Home.png',
+              height: 40.0,
+              color: Color.fromRGBO(5, 0, 154, 1),
+              width: 40.0,
             ),
+            label: 'Home',
           ),
-          IconButton(
-            onPressed: () {},
+          BottomNavigationBarItem(
             icon: Image.asset(
-              'assets/Tifac_icons_logo/Profile_icon.png',
+              'assets/Tifac_icons_logo/Reports.png',
+              height: 40.0,
+              color: Color.fromRGBO(5, 0, 154, 1),
+              width: 40.0,
             ),
+            label: 'Reports',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/Tifac_icons_logo/Patent_filling.png',
+              height: 40.0,
+              color: Color.fromRGBO(5, 0, 154, 1),
+              width: 40.0,
+            ),
+            label: 'Patent Filing',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/Tifac_icons_logo/Training.png',
+              height: 40.0,
+              color: Color.fromRGBO(5, 0, 154, 1),
+              width: 40.0,
+            ),
+            label: 'Training',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/Tifac_icons_logo/Join_as_expert.png',
+              height: 40.0,
+              color: Color.fromRGBO(5, 0, 154, 1),
+              width: 40.0,
+            ),
+            label: 'Experts',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/Tifac_icons_logo/Join_as_Innovator.png',
+              height: 40.0,
+              color: Color.fromRGBO(5, 0, 154, 1),
+              width: 40.0,
+            ),
+            label: 'Innovators',
           ),
         ],
-      ),
-      drawer: const DrawerTifac(),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            // Image Of the Login Screen
-            Container(
-              padding: const EdgeInsets.all(12.0),
-              color: const Color.fromRGBO(5, 0, 154, 1),
-              child: const ListTile(
-                title: Text(
-                  'TIFAC',
-                  style: TextStyle(color: Colors.white),
-                ),
-                isThreeLine: true,
-                contentPadding: EdgeInsets.all(10),
-                subtitle: Text(
-                  'Technology Information, Forecasting and Assessment Council(TIFAC) is an autonomous body under Department of Science and Technology, Government of India. Since its inception in 1988, TIFAC has been doing significant contribution as a unique knowledge network institution in India.',
-                  style: TextStyle(color: Colors.white),
-                ),
-                leading: Icon(Icons.arrow_right),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

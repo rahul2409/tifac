@@ -48,34 +48,8 @@ class _ReportsState extends State<Reports> {
     return Scaffold(
       appBar: AppBar(
         title: appBarTitle,
-        actions: [
-          IconButton(
-            icon: icon,
-            onPressed: () {
-              setState(() {
-                if (icon.icon == Icons.search) {
-                  icon = const Icon(
-                    Icons.close,
-                    color: Colors.white,
-                  );
-                  appBarTitle = TextField(
-                    controller: _controller,
-                    style: const TextStyle(
-                      color: Colors.white,
-                    ),
-                    decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.search, color: Colors.white),
-                        hintText: "Search...",
-                        hintStyle: TextStyle(color: Colors.white)),
-                    onChanged: searchOperation,
-                  );
-                }
-              });
-            },
-          )
-        ],
+        backgroundColor: Color.fromRGBO(5, 0, 154, 1),
       ),
-      drawer: const DrawerTifac(),
       body: _loading
           ? const Center(
               child: CircularProgressIndicator(),
@@ -83,7 +57,7 @@ class _ReportsState extends State<Reports> {
           : Container(
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
-              child: _report.success == 0
+              child: (_report.success == 0)
                   ? Text("Error Capturing Reports")
                   : ListView.builder(
                       itemCount: _report.reports.length,
@@ -103,18 +77,6 @@ class _ReportsState extends State<Reports> {
     );
   }
   
-  void searchOperation(String searchText) {
-    //searchresult.clear();
-    if (true) {//_isSearching != null
-      for (int i = 0; i < _list.length; i++) {
-        String data = _list[i].reportname;
-        if (data.toLowerCase().contains(searchText.toLowerCase())) {
-          //searchresult.add(data);
-        }
-      }
-    }
-  }
-
   void _OpenReport(BuildContext context, Report report) {
     Navigator.push(
       context,

@@ -36,7 +36,8 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
             appBar: AppBar(
-              title: const Text('Join As an Innovator'),
+              title: const Text('Join As an Expert'),
+              backgroundColor: Color.fromRGBO(5, 0, 154, 1),
             ),
             drawer: const DrawerTifac(),
             body: SizedBox(
@@ -283,7 +284,7 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                             );
                           }
                         },
-                        color: Colors.blue,
+                        color: Color.fromRGBO(5, 0, 154, 1),
                         child: const Text(
                           'Join as Innovators',
                           style: TextStyle(color: Colors.white),
