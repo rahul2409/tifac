@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:tifac/screens/about_tifac.dart';
 import 'package:tifac/screens/futuristic_technologies.dart';
 import 'package:tifac/screens/services.dart';
+import 'package:tifac/screens/utilities/user_profile.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -44,7 +45,14 @@ class _HomeState extends State<Home> {
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (builder) => UserProfile(),
+                ),
+              );
+            },
             icon: Image.asset(
               'assets/Tifac_icons_logo/Profile_icon.png',
             ),
@@ -144,7 +152,8 @@ class _HomeState extends State<Home> {
                 children: [
                   MaterialButton(
                     onPressed: () {
-                      Navigator.push(context, MaterialPageRoute(builder: (builder)=> Services()));
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (builder) => Services()));
                     },
                     child: const Text(
                       'Services',

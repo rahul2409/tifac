@@ -20,6 +20,7 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   String name = "";
+  late SharedPreferences sharedPreferences;
   String city = "";
   String email = "";
   double height = 0;
@@ -171,14 +172,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         setState(() {
                           loading = true;
                         });
+                        sharedPreferences =
+                            await SharedPreferences.getInstance();
                         UserModelRegister response =
                             await onPressedRegister(name, email, city, number);
-                        print("Response arrived successful with success = ${response.success} and userID ${response.userid} ${response.toString()}");
+                        print(
+                            "Response arrived successful with success = ${response.success} and userID ${response.userid} ${response.toString()}");
                         // Need to set shared preference.
                         setState(() {
                           loading = false;
                         });
                         if (response.success == 1) {
+                          sharedPreferences.setInt("userId", response.userid);
+                          sharedPreferences.setString("name", name);
+                          sharedPreferences.setString("email", email);
+                          sharedPreferences.setString("mobilenumber", number);
+                          sharedPreferences.setString("city", city);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
@@ -238,47 +247,35 @@ class _RegistrationPageState extends State<RegistrationPage> {
           );
   }
 
-  Future<int> _setUserInformation() async {
-    final preference = await SharedPreferences.getInstance();
-    final userId = preference.getInt('UserId');
-    if (userId == null && _userModelRegister.success == 1) {
-      // Shared Preference has not been set yet for the new user.
-      preference.setInt('UserId', _userModelRegister.userid);
-      preference.setInt('UserAvailableSuccess', _userModelRegister.success);
-      preference.setString('UserEmailId', email);
-      preference.setString('UserCity', city);
-      preference.setString('UserName', name);
-      preference.setString('UserMobileNumber', number);
-      print("Preferences set....");
-      return 1;
-      // Setting the user preferences.
-    } else if (userId == null && _userModelRegister.success == 0) {
-      return 0;
-    }
-    return 0;
-  }
-
   Future<UserModelRegister> onPressedRegister(
       String name, String email, String city, String number) async {
     final String apiUrl = "https://tifac.wipurl.com/index.php/signup";
-    Map bodyRegistration = {
-      "name": name,
-      "email": email,
-      "city": city,
-      "username": number,
-    };
-    final response = await http.post(Uri.parse(apiUrl), body:jsonEncode(bodyRegistration));
-    print("name : ${name}, email: ${email}, city: ${city}, username: ${number} ");
-    if (response.statusCode == 200) {
-      print("Status 200 reached. response is being processed..");
-      final responseString = response.body;
-      final userModelFromResponse = userModelRegisterFromJson(responseString);
-      if (userModelFromResponse.success == 1) {
-        print("response success = 1 and user id = ${userModelFromResponse.userid}");
-        return userModelFromResponse;
-      } else {
-        print("Response success = 0");
-        return UserModelRegister();
+    if (name != null && email != null && city != null && number != null) {
+      Map bodyRegistration = {
+        "name": "${name}",
+        "email": "${email}",
+        "city": "${city}",
+        "username": "${number}",
+      };
+      final response = await http.post(Uri.parse(apiUrl),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(bodyRegistration));
+      print(
+          "name : ${name}, email: ${email}, city: ${city}, username: ${number} ");
+      if (response.statusCode == 200) {
+        print("Status 200 reached. response is being processed..");
+        final responseString = response.body;
+        final userModelFromResponse = userModelRegisterFromJson(responseString);
+        if (userModelFromResponse.success == 1) {
+          print(
+              "response success = 1 and user id = ${userModelFromResponse.userid}");
+          return userModelFromResponse;
+        } else {
+          print("Response success = 0");
+          return UserModelRegister();
+        }
       }
     }
     print("Response.status code != 200");

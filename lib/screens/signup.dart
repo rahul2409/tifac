@@ -6,6 +6,7 @@ import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 import 'package:tifac/models/usermodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:tifac/screens/homescreen.dart';
+import 'package:tifac/screens/registration.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -151,7 +152,12 @@ class _SignUpPageState extends State<SignUpPage> {
                     const Text('New User?'),
                     MaterialButton(
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => RegistrationPage(),
+                          ),
+                        );
                       },
                       child: const Text('Register Here.'),
                     ),
