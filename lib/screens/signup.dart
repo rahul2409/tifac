@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -101,7 +102,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     });
                     // ignore: todo
                     // TODO: Get OTP. Check the api call and sign in the user use shared preference.
-                    // _OnPressedSendOTP();
+                    //_onPressedSendOTP();
                     UserModel response = await signInUser("91" + number);
                     setState(() {
                       apiCall = false;
@@ -203,13 +204,27 @@ class _SignUpPageState extends State<SignUpPage> {
     //Use the post and get the response check the response and return the usermodel.
   }
 
-  void onPressedSendOTP() {
+  Future<http.Response> fetchOTP(String number) {
+    return http.get(
+      Uri.parse(
+          "https://2factor.in/API/V1/3ce240d6-2390-11ec-a13b-0200cd936042/SMS/${number}/AUTOGEN"),
+    );
+  }
+
+  Future<http.Response> verifyOTP(String pin, String sessionid) {
+    return http.get(Uri.parse(
+        "https://2factor.in/API/V1/3ce240d6-2390-11ec-a13b-0200cd936042/SMS/VERIFY/${sessionid}/${pin}"));
+  }
+
+  void _onPressedSendOTP() async {
     // API call to fetch the otp and save it in pin.
+    http.Response otp = await fetchOTP(number);
+    print(otp.body);
+    var otpBody = jsonDecode(otp.body);
     setState(() {
       apiCall = true;
     });
     // Function call to get the the OTP
-    getOTP();
     showModalBottomSheet(
       context: context,
       builder: (context) {
@@ -229,15 +244,17 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
                 child: PinEntryTextField(
                   showFieldAsBox: true,
-                  onSubmit: (String pin) {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: const Text('Pin'),
-                            content: Text('Pin entered as $pin'),
-                          );
-                        });
+                  fields: 6,
+                  onSubmit: (String pin) async{
+                    http.Response finalOTP = await verifyOTP(pin, otpBody["Details"]);
+                    var finalOTPBody = jsonDecode(finalOTP.body);
+                    print(finalOTPBody);
+                    if(finalOTPBody["Status"] == "Success"){
+                      setState(() {
+                        apiCall = false;
+                        Navigator.pop(context);
+                      });
+                    }
                   },
                 ),
               ),
@@ -247,6 +264,4 @@ class _SignUpPageState extends State<SignUpPage> {
       },
     );
   }
-
-  void getOTP() {}
 }

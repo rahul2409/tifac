@@ -5,6 +5,7 @@ import 'package:tifac/screens/about_tifac.dart';
 import 'package:tifac/screens/futuristic_technologies.dart';
 import 'package:tifac/screens/services.dart';
 import 'package:tifac/screens/utilities/user_profile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -166,7 +167,14 @@ class _HomeState extends State<Home> {
                     color: Color.fromRGBO(5, 0, 154, 1),
                   ),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      const url = 'https://tifac.org.in/index.php/media-corner/events';
+                      if (await canLaunch(url)) {
+                        await launch(url);
+                      } else {
+                        throw 'Could not launch $url';
+                      }
+                    },
                     child: Text(
                       'Events',
                       style: TextStyle(
