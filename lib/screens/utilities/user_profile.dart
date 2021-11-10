@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tifac/screens/utilities/user_data.dart';
+import 'package:tifac/screens/utilities/user_reports.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -11,7 +13,6 @@ class UserProfile extends StatefulWidget {
 class _UserProfileState extends State<UserProfile> {
   @override
   double height = 0;
-  late SharedPreferences sharedPreferences;
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
 
@@ -27,24 +28,30 @@ class _UserProfileState extends State<UserProfile> {
           child: ListView(
             children: [
               ListTile(
-                title: Text('Name'),
-                subtitle: Text('Rahul nandrajog'),
+                title: Text('User Profile'),
+                subtitle: Text('Tap to get User Details'),
                 leading: Icon(Icons.person),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (builder) => User(),
+                    ),
+                  );
+                },
               ),
               ListTile(
-                title: Text('Email'),
+                title: Text('My Reports'),
                 subtitle: Text('rahul@123.com'),
-                leading: Icon(Icons.email),
-              ),
-              ListTile(
-                title: Text('City'),
-                subtitle: Text('Mumbai'),
-                leading: Icon(Icons.house),
-              ),
-              ListTile(
-                title: Text('Mobile Number'),
-                subtitle: Text('9619925240'),
-                leading:Icon(Icons.phone),
+                leading: Icon(Icons.note),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (builder) => UserReports(),
+                    ),
+                  );
+                },
               ),
             ],
           ),
