@@ -8,6 +8,8 @@ import 'package:tifac/models/usermodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:tifac/screens/homescreen.dart';
 import 'package:tifac/screens/registration.dart';
+import 'package:tifac/screens/utilities/user_data.dart';
+import 'package:tifac/services/shared_preferences.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -20,8 +22,23 @@ class _SignUpPageState extends State<SignUpPage> {
   String name = "";
   String email = "";
   String number = "";
+  String city = "";
   double height = 0;
   bool apiCall = false;
+  int userId = 0;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    city = UserSharedPreferences.getCity() ?? '';
+    name = UserSharedPreferences.getName() ?? '';
+    number = UserSharedPreferences.getUsername() ?? '';
+    email = UserSharedPreferences.getEmail() ?? '';
+    userId = UserSharedPreferences.getUserId() ?? -1;
+    if(city != '' && city != '' && city != '' && city != '' && userId != -1){
+      Navigator.pushReplacement(context,MaterialPageRoute(builder: (builder) => HomeScreen()));
+    }
+  }
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -105,10 +122,17 @@ class _SignUpPageState extends State<SignUpPage> {
                     //_onPressedSendOTP();
                     UserModel response = await signInUser("91" + number);
                     setState(() {
+                      userId = response.userid;
                       apiCall = false;
                     });
                     if (response.success == 1) {
                       // Add shared preference
+                      await UserSharedPreferences.setEmail(response.email);
+                      await UserSharedPreferences.setName(response.name);
+                      await UserSharedPreferences.setUserId(response.userid);
+                      await UserSharedPreferences.setCity(response.city);
+                      await UserSharedPreferences.setUsername(response.mobile);
+                      print("Stored Name is: ${UserSharedPreferences.getName()}");
                       print(
                           "name ${response.name}, email: ${response.email}, userID:${response.userid}, email:${response.email}");
                       Navigator.pushReplacement(

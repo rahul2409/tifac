@@ -10,6 +10,7 @@ import 'package:tifac/models/usermodel.dart';
 import 'package:tifac/screens/homescreen.dart';
 import 'package:tifac/screens/signup.dart';
 import 'package:http/http.dart' as http;
+import 'package:tifac/services/shared_preferences.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -28,7 +29,30 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String number = "";
   int preferencebool = 0;
   bool loading = false;
+  int userId = 0;
   late UserModelRegister _userModelRegister;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // Get the shared references if they are not null move to user home page.
+    number = UserSharedPreferences.getUsername() ?? '';
+    name = UserSharedPreferences.getName() ?? '';
+    email = UserSharedPreferences.getEmail() ?? '';
+    city = UserSharedPreferences.getCity() ?? '';
+    userId = UserSharedPreferences.getUserId() ?? -1;
+
+    if (number != '' &&
+        name != '' &&
+        email != '' &&
+        city != '' &&
+        userId != -1) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (builder) => HomeScreen()));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -180,14 +204,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             "Response arrived successful with success = ${response.success} and userID ${response.userid} ${response.toString()}");
                         // Need to set shared preference.
                         setState(() {
+                          userId = response.userid;
                           loading = false;
                         });
                         if (response.success == 1) {
-                          sharedPreferences.setInt("userId", response.userid);
-                          sharedPreferences.setString("name", name);
-                          sharedPreferences.setString("email", email);
-                          sharedPreferences.setString("mobilenumber", number);
-                          sharedPreferences.setString("city", city);
+                          await UserSharedPreferences.setUsername(number);
+                          await UserSharedPreferences.setName(name);
+                          await UserSharedPreferences.setCity(city);
+                          await UserSharedPreferences.setEmail(email);
+                          await UserSharedPreferences.setUserId(
+                              response.userid);
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(

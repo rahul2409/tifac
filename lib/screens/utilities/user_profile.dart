@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tifac/screens/utilities/user_data.dart';
 import 'package:tifac/screens/utilities/user_reports.dart';
+import 'package:tifac/services/shared_preferences.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({Key? key}) : super(key: key);
@@ -52,6 +53,13 @@ class _UserProfileState extends State<UserProfile> {
                     ),
                   );
                 },
+              ),
+              MaterialButton(
+                onPressed: () async{
+                  await UserSharedPreferences.clear();
+                },
+                child: const Text("Logout"),
+                color: const Color.fromRGBO(5, 0, 154, 1),
               ),
             ],
           ),
