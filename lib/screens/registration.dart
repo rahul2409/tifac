@@ -42,14 +42,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
     email = UserSharedPreferences.getEmail() ?? '';
     city = UserSharedPreferences.getCity() ?? '';
     userId = UserSharedPreferences.getUserId() ?? -1;
-
     if (number != '' &&
         name != '' &&
         email != '' &&
         city != '' &&
         userId != -1) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (builder) => HomeScreen()));
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      });
     }
   }
 
@@ -57,6 +58,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+    
     return loading
         ? const Center(
             child: CircularProgressIndicator(),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 // ignore: import_of_legacy_library_into_null_safe
@@ -8,7 +7,6 @@ import 'package:tifac/models/usermodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:tifac/screens/homescreen.dart';
 import 'package:tifac/screens/registration.dart';
-import 'package:tifac/screens/utilities/user_data.dart';
 import 'package:tifac/services/shared_preferences.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -28,6 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
   int userId = 0;
   @override
   void initState() {
+    // ignore: todo
     // TODO: implement initState
     super.initState();
     city = UserSharedPreferences.getCity() ?? '';
@@ -35,10 +34,18 @@ class _SignUpPageState extends State<SignUpPage> {
     number = UserSharedPreferences.getUsername() ?? '';
     email = UserSharedPreferences.getEmail() ?? '';
     userId = UserSharedPreferences.getUserId() ?? -1;
-    if(city != '' && city != '' && city != '' && city != '' && userId != -1){
-      Navigator.pushReplacement(context,MaterialPageRoute(builder: (builder) => HomeScreen()));
+    if (city != '' &&
+        name != '' &&
+        number != '' &&
+        email != '' &&
+        userId != -1) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (_) => const HomeScreen()));
+      });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -131,8 +138,11 @@ class _SignUpPageState extends State<SignUpPage> {
                       await UserSharedPreferences.setName(response.name);
                       await UserSharedPreferences.setUserId(response.userid);
                       await UserSharedPreferences.setCity(response.city);
-                      await UserSharedPreferences.setUsername(response.mobile);
-                      print("Stored Name is: ${UserSharedPreferences.getName()}");
+                      await UserSharedPreferences.setUsername("91" + number);
+                      // ignore: avoid_print
+                      print(
+                          "Stored Name is: ${UserSharedPreferences.getName()}");
+                      // ignore: avoid_print
                       print(
                           "name ${response.name}, email: ${response.email}, userID:${response.userid}, email:${response.email}");
                       Navigator.pushReplacement(
@@ -180,7 +190,7 @@ class _SignUpPageState extends State<SignUpPage> {
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (builder) => RegistrationPage(),
+                            builder: (builder) => const RegistrationPage(),
                           ),
                         );
                       },
@@ -198,10 +208,12 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<UserModel> signInUser(String number) async {
     String apiUrl = "https://tifac.wipurl.com/index.php/signin";
+    // ignore: avoid_print
     print(number);
     Map encodeNumber = {
       "username": number,
     };
+    // ignore: avoid_print
     print(jsonEncode(encodeNumber));
     final response = await http.post(Uri.parse(apiUrl),
         headers: <String, String>{
@@ -211,10 +223,13 @@ class _SignUpPageState extends State<SignUpPage> {
 
     if (response.statusCode == 200) {
       // The response is okay and can be processed.
+      // ignore: avoid_print
       print(response.toString());
       final responseString = response.body;
+      // ignore: avoid_print
       print(responseString);
       final userModelFromResponse = userModelFromJson(responseString);
+      // ignore: avoid_print
       print(userModelFromResponse);
       if (userModelFromResponse.success == 1) {
         // UserModel Sign in Successful.
@@ -240,9 +255,11 @@ class _SignUpPageState extends State<SignUpPage> {
         "https://2factor.in/API/V1/3ce240d6-2390-11ec-a13b-0200cd936042/SMS/VERIFY/${sessionid}/${pin}"));
   }
 
+  // ignore: unused_element
   void _onPressedSendOTP() async {
     // API call to fetch the otp and save it in pin.
     http.Response otp = await fetchOTP(number);
+    // ignore: avoid_print
     print(otp.body);
     var otpBody = jsonDecode(otp.body);
     setState(() {
@@ -269,11 +286,13 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: PinEntryTextField(
                   showFieldAsBox: true,
                   fields: 6,
-                  onSubmit: (String pin) async{
-                    http.Response finalOTP = await verifyOTP(pin, otpBody["Details"]);
+                  onSubmit: (String pin) async {
+                    http.Response finalOTP =
+                        await verifyOTP(pin, otpBody["Details"]);
                     var finalOTPBody = jsonDecode(finalOTP.body);
+                    // ignore: avoid_print
                     print(finalOTPBody);
-                    if(finalOTPBody["Status"] == "Success"){
+                    if (finalOTPBody["Status"] == "Success") {
                       setState(() {
                         apiCall = false;
                         Navigator.pop(context);

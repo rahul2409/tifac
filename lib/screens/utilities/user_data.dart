@@ -19,9 +19,9 @@ class _UserState extends State<User> {
     // TODO: implement initState
     super.initState();
     name = UserSharedPreferences.getName() ?? '';
-    username = UserSharedPreferences.getName() ?? '';
-    city = UserSharedPreferences.getName() ?? '';
-    email = UserSharedPreferences.getName() ?? '';
+    username = UserSharedPreferences.getUsername() ?? '';
+    city = UserSharedPreferences.getCity() ?? '';
+    email = UserSharedPreferences.getEmail() ?? '';
     userId = UserSharedPreferences.getUserId() ?? -1;
   }
 
