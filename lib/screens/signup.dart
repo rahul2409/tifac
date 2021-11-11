@@ -1,8 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-// ignore: import_of_legacy_library_into_null_safe
-import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 import 'package:tifac/models/usermodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:tifac/screens/homescreen.dart';
@@ -18,11 +16,13 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   String name = "";
+  String pin = "";
   String email = "";
   String number = "";
   String city = "";
   double height = 0;
   bool apiCall = false;
+  bool isVerified = false;
   int userId = 0;
   @override
   void initState() {
@@ -91,26 +91,85 @@ class _SignUpPageState extends State<SignUpPage> {
                 ),
               ),
               // Input field for mobile number
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  top: 12,
-                ),
-                child: Container(
-                  width: width - 30,
-                  alignment: Alignment.center,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Enter your registered mobile Number',
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
                     ),
-                    onChanged: (text) {
-                      number = text;
-                    },
+                    child: Container(
+                      width: width * 0.66,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter your mobile Number',
+                        ),
+                        onChanged: (text) {
+                          number = text;
+                        },
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(
+                    child: MaterialButton(
+                      padding: EdgeInsets.all(0),
+                      onPressed: _onPressedSendOTP,
+                      child: const Text(
+                        'Get OTP',
+                        style: TextStyle(color: Color.fromRGBO(5, 0, 154, 1)),
+                      ),
+                    ),
+                    width: 60,
+                  ),
+                ],
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width * 0.66,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter the OTP',
+                        ),
+                        onChanged: (text) {
+                          pin = text;
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    child: MaterialButton(
+                      padding: EdgeInsets.all(0),
+                      onPressed: () async {
+                        var verify = await verifyOTPSend(pin);
+                        setState(() {
+                          isVerified = verify;
+                        });
+                      },
+                      child: const Text(
+                        'Verify',
+                        style: TextStyle(color: Color.fromRGBO(5, 0, 154, 1)),
+                      ),
+                    ),
+                    width: 60,
+                  ),
+                ],
               ),
 
               SizedBox(
@@ -120,46 +179,51 @@ class _SignUpPageState extends State<SignUpPage> {
               Container(
                 alignment: Alignment.center,
                 child: MaterialButton(
-                  onPressed: () async {
-                    setState(() {
-                      apiCall = true;
-                    });
-                    // ignore: todo
-                    // TODO: Get OTP. Check the api call and sign in the user use shared preference.
-                    //_onPressedSendOTP();
-                    UserModel response = await signInUser("91" + number);
-                    setState(() {
-                      userId = response.userid;
-                      apiCall = false;
-                    });
-                    if (response.success == 1) {
-                      // Add shared preference
-                      await UserSharedPreferences.setEmail(response.email);
-                      await UserSharedPreferences.setName(response.name);
-                      await UserSharedPreferences.setUserId(response.userid);
-                      await UserSharedPreferences.setCity(response.city);
-                      await UserSharedPreferences.setUsername("91" + number);
-                      // ignore: avoid_print
-                      print(
-                          "Stored Name is: ${UserSharedPreferences.getName()}");
-                      // ignore: avoid_print
-                      print(
-                          "name ${response.name}, email: ${response.email}, userID:${response.userid}, email:${response.email}");
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => const HomeScreen(),
-                        ),
-                      );
-                    } else {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => const SignUpPage(),
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: isVerified
+                      ? () async {
+                          setState(() {
+                            apiCall = true;
+                          });
+                          // ignore: todo
+                          // TODO: Get OTP. Check the api call and sign in the user use shared preference.
+                          //_onPressedSendOTP();
+                          UserModel response = await signInUser("91" + number);
+                          setState(() {
+                            userId = response.userid;
+                            apiCall = false;
+                          });
+                          if (response.success == 1) {
+                            // Add shared preference
+                            await UserSharedPreferences.setEmail(
+                                response.email);
+                            await UserSharedPreferences.setName(response.name);
+                            await UserSharedPreferences.setUserId(
+                                response.userid);
+                            await UserSharedPreferences.setCity(response.city);
+                            await UserSharedPreferences.setUsername(
+                                "91" + number);
+                            // ignore: avoid_print
+                            print(
+                                "Stored Name is: ${UserSharedPreferences.getName()}");
+                            // ignore: avoid_print
+                            print(
+                                "name ${response.name}, email: ${response.email}, userID:${response.userid}, email:${response.email}");
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => const HomeScreen(),
+                              ),
+                            );
+                          } else {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => const SignUpPage(),
+                              ),
+                            );
+                          }
+                        }
+                      : null,
                   color: Colors.blue,
                   child: const Padding(
                     padding: EdgeInsets.only(
@@ -167,7 +231,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       bottom: 10,
                     ),
                     child: Text(
-                      "Get OTP",
+                      "Sign In ",
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w300,
@@ -261,50 +325,20 @@ class _SignUpPageState extends State<SignUpPage> {
     http.Response otp = await fetchOTP(number);
     // ignore: avoid_print
     print(otp.body);
-    var otpBody = jsonDecode(otp.body);
-    setState(() {
-      apiCall = true;
-    });
+    otpBody = jsonDecode(otp.body);
     // Function call to get the the OTP
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return SizedBox(
-          height: height / 3,
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(
-                  top: 40.0,
-                ),
-                child: Text('Enter the OTP'),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 20.0,
-                ),
-                child: PinEntryTextField(
-                  showFieldAsBox: true,
-                  fields: 6,
-                  onSubmit: (String pin) async {
-                    http.Response finalOTP =
-                        await verifyOTP(pin, otpBody["Details"]);
-                    var finalOTPBody = jsonDecode(finalOTP.body);
-                    // ignore: avoid_print
-                    print(finalOTPBody);
-                    if (finalOTPBody["Status"] == "Success") {
-                      setState(() {
-                        apiCall = false;
-                        Navigator.pop(context);
-                      });
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
-        );
-      },
-    );
+  }
+
+  // ignore: prefer_typing_uninitialized_variables
+  var otpBody;
+  Future<bool> verifyOTPSend(String pin) async {
+    http.Response finalOTP = await verifyOTP(pin, otpBody["Details"]);
+    var finalOTPBody = jsonDecode(finalOTP.body);
+    // ignore: avoid_print
+    print(finalOTPBody);
+    if (finalOTPBody["Status"] == "Success") {
+      return true;
+    }
+    return false;
   }
 }

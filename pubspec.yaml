@@ -12,10 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_native_splash: ^1.2.3
-  pin_entry_text_field: ^0.1.4
   http: ^0.13.3
   shared_preferences: ^2.0.8
-  url_launcher: ^6.0.12
+  url_launcher: 
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
