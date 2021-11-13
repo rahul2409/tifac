@@ -12,6 +12,7 @@ class ReportPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(report.reportname),
+        backgroundColor: Color.fromRGBO(5, 0, 154, 1),
       ),
       bottomNavigationBar: BottomAppBar(
         child: Container(
@@ -25,7 +26,7 @@ class ReportPage extends StatelessWidget {
                   'Purchase',
                   style: TextStyle(color: Colors.white),
                 ),
-                color: Colors.blue,
+                color: Color.fromRGBO(5, 0, 154, 1),
                 onPressed: () {},
               ),
             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tifac/screens/Home.dart';
 import 'package:tifac/screens/experts.dart';
+import 'package:tifac/screens/homescreen.dart';
 import 'package:tifac/screens/innovators.dart';
 import 'package:tifac/screens/patents.dart';
 import 'package:tifac/screens/report.dart';
@@ -17,7 +18,7 @@ class _ServicesState extends State<Services> {
   int _selectedIndex = 0;
   TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   List _widgetOptions = [
-    const Home(),
+    const HomeScreen(),
     const Reports(),
     const Patents(),
     const Training(),
@@ -44,26 +45,6 @@ class _ServicesState extends State<Services> {
       body: (_selectedIndex == 0)
           ? ListView(
               children: [
-                Container(
-                  color: const Color.fromRGBO(5, 0, 154, 1),
-                  child: ListTile(
-                    leading: Image.asset('assets/Tifac_icons_logo/Home.png'),
-                    title: const Text(
-                      'Home Page',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => Home(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
                 Container(
                   color: const Color.fromRGBO(5, 0, 154, 1),
                   child: ListTile(

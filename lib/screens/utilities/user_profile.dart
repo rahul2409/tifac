@@ -43,7 +43,7 @@ class _UserProfileState extends State<UserProfile> {
               ),
               ListTile(
                 title: const Text('My Reports'),
-                subtitle: const Text('rahul@123.com'),
+                subtitle: const Text('Tap to get user purchased'),
                 leading: const Icon(Icons.note),
                 onTap: () {
                   Navigator.push(
