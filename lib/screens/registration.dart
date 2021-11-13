@@ -10,6 +10,7 @@ import 'package:tifac/models/usermodel.dart';
 import 'package:tifac/screens/homescreen.dart';
 import 'package:tifac/screens/signup.dart';
 import 'package:http/http.dart' as http;
+import 'package:tifac/screens/utilities/otp_verify.dart';
 import 'package:tifac/services/shared_preferences.dart';
 
 class RegistrationPage extends StatefulWidget {
@@ -30,6 +31,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
   int preferencebool = 0;
   bool loading = false;
   int userId = 0;
+  late Map otpBody;
+
   late UserModelRegister _userModelRegister;
 
   @override
@@ -58,7 +61,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
-    
+
     return loading
         ? const Center(
             child: CircularProgressIndicator(),
@@ -138,7 +141,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           labelText: 'Enter your mobile Number',
                         ),
                         onChanged: (text) {
-                          number = "91" + text;
+                          number = text;
                         },
                       ),
                     ),
@@ -216,10 +219,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           await UserSharedPreferences.setEmail(email);
                           await UserSharedPreferences.setUserId(
                               response.userid);
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (builder) => const HomeScreen(),
+                          // Verify with OTP
+                          http.Response otp = await fetchOTP(number);
+                          // ignore: avoid_print
+                          print(otp.body);
+                          otpBody = jsonDecode(otp.body);
+                          Future.delayed(
+                            const Duration(
+                              microseconds: 500,
+                            ),
+                          ).then(
+                            (value) => Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => OtpVerifyAndLogin(
+                                    otpBody: otpBody, username: number),
+                              ),
                             ),
                           );
                         } else {
