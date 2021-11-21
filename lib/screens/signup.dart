@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:tifac/models/usermodel.dart';
 import 'package:http/http.dart' as http;
 import 'package:tifac/screens/homescreen.dart';
@@ -48,11 +49,11 @@ class _SignUpPageState extends State<SignUpPage> {
     }
   }
 
+  final formGlobalKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-
     return Scaffold(
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -100,16 +101,29 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Container(
                 width: width * 0.66,
                 alignment: Alignment.center,
-                child: TextFormField(
-                  initialValue: number,
-                  keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter your mobile Number',
+                child: Form(
+                  key: formGlobalKey,
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        validator: (text) {
+                          if (text!.length != 10) {
+                            return "Enter 10 digit mobile number";
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          focusColor: Colors.blue,
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter your mobile Number',
+                        ),
+                        onChanged: (text){
+                          number = text;
+                        },
+                      ),
+                    ],
                   ),
-                  onChanged: (text) {
-                    number = text;
-                  },
                 ),
               ),
             ),
@@ -122,23 +136,25 @@ class _SignUpPageState extends State<SignUpPage> {
               alignment: Alignment.center,
               child: MaterialButton(
                 onPressed: () async {
-                  http.Response otp = await fetchOTP(number);
-                  // ignore: avoid_print
-                  print(otp.body);
-                  otpBody = jsonDecode(otp.body);
-                  Future.delayed(
-                    const Duration(
-                      microseconds: 500,
-                    ),
-                  ).then(
-                    (value) => Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (builder) => OtpVerifyAndLogin(
-                            otpBody: otpBody, username: number),
+                  if (formGlobalKey.currentState!.validate()) {
+                    http.Response otp = await fetchOTP(number);
+                    // ignore: avoid_print
+                    print(otp.body);
+                    otpBody = jsonDecode(otp.body);
+                    Future.delayed(
+                      const Duration(
+                        microseconds: 500,
                       ),
-                    ),
-                  );
+                    ).then(
+                      (value) => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (builder) => OtpVerifyAndLogin(
+                              otpBody: otpBody, username: number),
+                        ),
+                      ),
+                    );
+                  }
                 },
                 color: Colors.blue,
                 child: const Padding(
@@ -159,26 +175,6 @@ class _SignUpPageState extends State<SignUpPage> {
               ),
             ),
             // Already Have an account? sign in using OTP.
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('New User?'),
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => const RegistrationPage(),
-                        ),
-                      );
-                    },
-                    child: const Text('Register Here.'),
-                  ),
-                ],
-              ),
-            ),
           ],
         ),
       ),

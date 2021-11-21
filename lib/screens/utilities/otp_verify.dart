@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:tifac/models/usermodel.dart';
 import 'package:tifac/screens/homescreen.dart';
+import 'package:tifac/screens/registration.dart';
 import 'package:tifac/screens/signup.dart';
 import 'package:tifac/services/shared_preferences.dart';
 
@@ -138,7 +139,6 @@ class _OtpVerifyAndLoginState extends State<OtpVerifyAndLogin> {
                           UserModel response =
                               await signInUser("91" + widget.username);
                           setState(() {
-                            userId = response.userid;
                             apiCall = false;
                           });
                           if (response.success == 1) {
@@ -167,7 +167,7 @@ class _OtpVerifyAndLoginState extends State<OtpVerifyAndLogin> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (builder) => const SignUpPage(),
+                                builder: (builder) => const RegistrationPage(),
                               ),
                             );
                           }
@@ -219,11 +219,12 @@ class _OtpVerifyAndLoginState extends State<OtpVerifyAndLogin> {
       final responseString = response.body;
       // ignore: avoid_print
       print(responseString);
-      final userModelFromResponse = userModelFromJson(responseString);
+      var userModelFromResponse = jsonDecode(responseString);
       // ignore: avoid_print
-      print(userModelFromResponse);
-      if (userModelFromResponse.success == 1) {
+      print('${userModelFromResponse} and ${userModelFromResponse["success"]}');
+      if (userModelFromResponse["success"] == 1) {
         // UserModel Sign in Successful.
+        userModelFromResponse = userModelFromJson(responseString);
         return userModelFromResponse;
       } else {
         // UsermodelApi hit but sign in failed.

@@ -39,7 +39,7 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
               title: const Text('Join As an Expert'),
               backgroundColor: Color.fromRGBO(5, 0, 154, 1),
             ),
-            drawer: const DrawerTifac(),
+            // drawer: const DrawerTifac(),
             body: SizedBox(
               height: height,
               width: width,
@@ -286,7 +286,7 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                         },
                         color: Color.fromRGBO(5, 0, 154, 1),
                         child: const Text(
-                          'Join as Innovators',
+                          'Join as Expert',
                           style: TextStyle(color: Colors.white),
                         ),
                       ),

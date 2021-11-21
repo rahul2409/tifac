@@ -57,6 +57,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
     }
   }
 
+  final formGlobalKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
@@ -104,90 +106,103 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                   ),
                   // Input field for name
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 12,
-                    ),
-                    child: Container(
-                      width: width - 30,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter the name for registration',
+                  Form(
+                    key: formGlobalKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 12,
+                          ),
+                          child: Container(
+                            width: width - 30,
+                            alignment: Alignment.center,
+                            child: TextField(
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Enter the name for registration',
+                              ),
+                              onChanged: (text) {
+                                name = text;
+                              },
+                            ),
+                          ),
                         ),
-                        onChanged: (text) {
-                          name = text;
-                        },
-                      ),
-                    ),
-                  ),
-                  // Input field for mobile number
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 12,
-                    ),
-                    child: Container(
-                      width: width - 30,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter your mobile Number',
+                        // Input field for mobile number
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 12,
+                          ),
+                          child: Container(
+                            width: width - 30,
+                            alignment: Alignment.center,
+                            child: TextFormField(
+                              validator: (text) {
+                                if (text!.length != 10) {
+                                  return "Enter a 10 digit mobile number";
+                                }
+                                return null;
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Enter your mobile Number',
+                              ),
+                              onChanged: (text) {
+                                number = text;
+                              },
+                            ),
+                          ),
                         ),
-                        onChanged: (text) {
-                          number = text;
-                        },
-                      ),
-                    ),
-                  ),
-                  // Input field for email-id
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 12,
-                    ),
-                    child: Container(
-                      width: width - 30,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter your email address',
+                        // Input field for email-id
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 12,
+                          ),
+                          child: Container(
+                            width: width - 30,
+                            alignment: Alignment.center,
+                            child: TextField(
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Enter your email address',
+                              ),
+                              onChanged: (text) {
+                                email = text;
+                              },
+                            ),
+                          ),
                         ),
-                        onChanged: (text) {
-                          email = text;
-                        },
-                      ),
-                    ),
-                  ),
-                  // Input field for email-id
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 12,
-                    ),
-                    child: Container(
-                      width: width - 30,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter your City',
+                        // Input field for email-id
+                        Padding(
+                          padding: const EdgeInsets.only(
+                            left: 20,
+                            right: 20,
+                            top: 12,
+                          ),
+                          child: Container(
+                            width: width - 30,
+                            alignment: Alignment.center,
+                            child: TextField(
+                              keyboardType: TextInputType.emailAddress,
+                              decoration: const InputDecoration(
+                                border: OutlineInputBorder(),
+                                labelText: 'Enter your City',
+                              ),
+                              onChanged: (text) {
+                                city = text;
+                              },
+                            ),
+                          ),
                         ),
-                        onChanged: (text) {
-                          city = text;
-                        },
-                      ),
+                      ],
                     ),
                   ),
                   SizedBox(
@@ -198,52 +213,43 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     alignment: Alignment.center,
                     child: MaterialButton(
                       onPressed: () async {
-                        setState(() {
-                          loading = true;
-                        });
-                        sharedPreferences =
-                            await SharedPreferences.getInstance();
-                        UserModelRegister response =
-                            await onPressedRegister(name, email, city, number);
-                        print(
-                            "Response arrived successful with success = ${response.success} and userID ${response.userid} ${response.toString()}");
-                        // Need to set shared preference.
-                        setState(() {
-                          userId = response.userid;
-                          loading = false;
-                        });
-                        if (response.success == 1) {
-                          await UserSharedPreferences.setUsername(number);
-                          await UserSharedPreferences.setName(name);
-                          await UserSharedPreferences.setCity(city);
-                          await UserSharedPreferences.setEmail(email);
-                          await UserSharedPreferences.setUserId(
-                              response.userid);
-                          // Verify with OTP
-                          http.Response otp = await fetchOTP(number);
-                          // ignore: avoid_print
-                          print(otp.body);
-                          otpBody = jsonDecode(otp.body);
-                          Future.delayed(
-                            const Duration(
-                              microseconds: 500,
-                            ),
-                          ).then(
-                            (value) => Navigator.push(
+                        if (formGlobalKey.currentState!.validate()) {
+                          setState(() {
+                            loading = true;
+                          });
+                          sharedPreferences =
+                              await SharedPreferences.getInstance();
+                          UserModelRegister response = await onPressedRegister(
+                              name, email, city, number);
+                          print(
+                              "Response arrived successful with success = ${response.success} and userID ${response.userid} ${response.toString()}");
+                          // Need to set shared preference.
+                          setState(() {
+                            userId = response.userid;
+                            loading = false;
+                          });
+                          if (response.success == 1) {
+                            await UserSharedPreferences.setUsername(number);
+                            await UserSharedPreferences.setName(name);
+                            await UserSharedPreferences.setCity(city);
+                            await UserSharedPreferences.setEmail(email);
+                            await UserSharedPreferences.setUserId(
+                                response.userid);
+                            // Verify with OTP
+                            Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                builder: (builder) => OtpVerifyAndLogin(
-                                    otpBody: otpBody, username: number),
+                                builder: (builder) => HomeScreen(),
                               ),
-                            ),
-                          );
-                        } else {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (builder) => const RegistrationPage(),
-                            ),
-                          );
+                            );
+                          } else {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (builder) => const RegistrationPage(),
+                              ),
+                            );
+                          }
                         }
                       },
                       color: Colors.blue,
@@ -265,25 +271,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     ),
                   ),
                   // Already Have an account? sign in using OTP.
-                  Padding(
-                    padding: const EdgeInsets.all(20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text('Already Registered?'),
-                        MaterialButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => SignUpPage()),
-                            );
-                          },
-                          child: const Text('Sign In Here'),
-                        ),
-                      ],
-                    ),
-                  ),
                 ],
               ),
             ),
