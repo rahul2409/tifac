@@ -116,7 +116,7 @@ class _ReportPageState extends State<ReportPage> {
       'description': widget.report.reportname,
       'retry': {'enabled': true, 'max_count': 2},
       'send_sms_hash': true,
-      'prefill': {'contact': mobile, 'email': email},
+      'prefill': {'contact': mobile, 'email': email },
       'external': {
         'wallets': ['paytm']
       }
