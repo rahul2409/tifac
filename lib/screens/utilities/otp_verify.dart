@@ -127,6 +127,7 @@ class _OtpVerifyAndLoginState extends State<OtpVerifyAndLogin> {
                         // ignore: todo
                         // TODO: Get OTP. Check the api call and sign in the user use shared preference.
                         //_onPressedSendOTP();
+                        //number without the +91
                         if (widget.username.length == 12) {
                           widget.username.substring(4);
                           print('Username after trimming ${widget.username}');
@@ -137,7 +138,7 @@ class _OtpVerifyAndLoginState extends State<OtpVerifyAndLogin> {
                           ),
                         ).then((value) async {
                           UserModel response =
-                              await signInUser("91" + widget.username);
+                              await signInUser(widget.username);
                           setState(() {
                             apiCall = false;
                           });
