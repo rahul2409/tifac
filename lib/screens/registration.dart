@@ -99,9 +99,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       child: Text(
                         "Register For TIFAC",
                         style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: height * 0.04,
-                        ),
+                            fontWeight: FontWeight.w400,
+                            fontSize: height * 0.04,
+                            color: Color.fromRGBO(5, 0, 154, 1)),
                       ),
                     ),
                   ),

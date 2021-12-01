@@ -36,8 +36,11 @@ class _HomeState extends State<Home> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Color.fromRGBO(5, 0, 154, 1),
-        leading: Image.asset('assets/tifac_logo.png'),
+        // foregroundColor: Color.fromRGBO(240, 125, 0, 1),
+        // foregroundColor: Color.fromRGBO(5, 0, 154, 1),
+        //  foregroundColor: Color(0xf07d00),
+        leading: Image.asset('assets/tifactoplogo.png'),
+
         actions: [
           IconButton(
             onPressed: () {},
@@ -66,12 +69,13 @@ class _HomeState extends State<Home> {
           children: [
             // Image Of the Login Screen
             Container(
-              padding: const EdgeInsets.all(12.0),
-              color: const Color.fromRGBO(5, 0, 154, 1),
+              padding: const EdgeInsets.all(5.0),
+              // color: const Color.fromRGBO(5, 0, 154, 1),
+              color: const Color.fromRGBO(0, 81, 154, 1),
               child: ListTile(
                 title: const Text(
                   'TIFAC',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Color.fromRGBO(240, 125, 0, 1)),
                 ),
                 isThreeLine: true,
                 contentPadding: const EdgeInsets.all(10),
@@ -119,28 +123,49 @@ class _HomeState extends State<Home> {
             SafeArea(
               child: SizedBox(
                 width: double.infinity,
-                height: 350,
+                height: 250,
                 child: GridView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: dummyData.length,
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                       maxCrossAxisExtent: width),
                   itemBuilder: (context, index) {
-                    return GridTile(
-                      child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Container(
-                          color: Color.fromRGBO(5, 0, 154, 1),
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                            child: Text(
-                              dummyData[index],
-                              style: TextStyle(color: Colors.white),
+                    if (index % 2 == 0) {
+                      return GridTile(
+                        child: Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: Container(
+                            // color: Color.fromRGBO(5, 0, 154, 1),
+                            color: Color.fromRGBO(0, 143, 61, 1),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                              child: Text(
+                                dummyData[index],
+                                style: TextStyle(
+                                    color: Color.fromRGBO(240, 125, 0, 1)),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      return GridTile(
+                        child: Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: Container(
+                            // color: Color.fromRGBO(5, 0, 154, 1),
+                            color: Color.fromRGBO(0, 81, 154, 1),
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                              child: Text(
+                                dummyData[index],
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    }
                   },
                 ),
               ),
@@ -168,7 +193,8 @@ class _HomeState extends State<Home> {
                   ),
                   MaterialButton(
                     onPressed: () async {
-                      const url = 'https://tifac.org.in/index.php/media-corner/events';
+                      const url =
+                          'https://tifac.org.in/index.php/media-corner/events';
                       if (await canLaunch(url)) {
                         await launch(url);
                       } else {

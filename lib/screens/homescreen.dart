@@ -49,66 +49,76 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: _widgetOptions[_selectedIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        backgroundColor: Color.fromRGBO(5, 0, 154, 1),
-        onTap: _onItemTapped,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/Tifac_icons_logo/Home.png',
-              height: 40.0,
-              color: Color.fromRGBO(5, 0, 154, 1),
-              width: 40.0,
+      bottomNavigationBar: new Theme(
+        data: Theme.of(context).copyWith(
+            // sets the background color of the `BottomNavigationBar`
+            canvasColor: Color.fromRGBO(0, 81, 154, 1),
+            // sets the active color of the `BottomNavigationBar` if `Brightness` is light
+            primaryColor: Color.fromRGBO(240, 125, 0, 1),
+            textTheme: Theme.of(context).textTheme.copyWith(
+                caption: new TextStyle(color: Color.fromRGBO(240, 125, 0, 1)))),
+        child: new BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          // backgroundColor: Color.fromRGBO(240, 125, 0, 1),
+          onTap: _onItemTapped,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/Tifac_icons_logo/Home.png',
+                height: 40.0,
+                // color: Color.fromRGBO(5, 0, 154, 1),
+                width: 40.0,
+              ),
+              label: 'Home',
+              //  backgroundColor: Color.fromRGBO(5, 0, 154, 1)
             ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/Tifac_icons_logo/Reports.png',
-              height: 40.0,
-              color: Color.fromRGBO(5, 0, 154, 1),
-              width: 40.0,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/Tifac_icons_logo/Reports.png',
+                height: 40.0,
+                //    color: Color.fromRGBO(5, 0, 154, 1),
+                width: 40.0,
+              ),
+              label: 'Reports',
             ),
-            label: 'Reports',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/Tifac_icons_logo/Patent_filling.png',
-              height: 40.0,
-              color: Color.fromRGBO(5, 0, 154, 1),
-              width: 40.0,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/Tifac_icons_logo/Patent_filling.png',
+                height: 40.0,
+                //   color: Color.fromRGBO(5, 0, 154, 1),
+                width: 40.0,
+              ),
+              label: 'Patent Filing',
             ),
-            label: 'Patent Filing',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/Tifac_icons_logo/Training.png',
-              height: 40.0,
-              color: Color.fromRGBO(5, 0, 154, 1),
-              width: 40.0,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/Tifac_icons_logo/Training.png',
+                height: 40.0,
+                //   color: Color.fromRGBO(5, 0, 154, 1),
+                width: 40.0,
+              ),
+              label: 'Training',
             ),
-            label: 'Training',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/Tifac_icons_logo/Join_as_expert.png',
-              height: 40.0,
-              color: Color.fromRGBO(5, 0, 154, 1),
-              width: 40.0,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/Tifac_icons_logo/Join_as_expert.png',
+                height: 40.0,
+                //    color: Color.fromRGBO(5, 0, 154, 1),
+                width: 40.0,
+              ),
+              label: 'Experts',
             ),
-            label: 'Experts',
-          ),
-          BottomNavigationBarItem(
-            icon: Image.asset(
-              'assets/Tifac_icons_logo/Join_as_Innovator.png',
-              height: 40.0,
-              color: Color.fromRGBO(5, 0, 154, 1),
-              width: 40.0,
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                'assets/Tifac_icons_logo/Join_as_Innovator.png',
+                height: 40.0,
+                //   color: Color.fromRGBO(5, 0, 154, 1),
+                width: 40.0,
+              ),
+              label: 'Innovators',
             ),
-            label: 'Innovators',
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -85,6 +85,7 @@ class _SignUpPageState extends State<SignUpPage> {
                 child: Text(
                   "Sign In for TIFAC",
                   style: TextStyle(
+                    color: Color.fromRGBO(5, 0, 154, 1),
                     fontWeight: FontWeight.w400,
                     fontSize: height * 0.04,
                   ),
@@ -114,11 +115,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         },
                         keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
-                          focusColor: Colors.blue,
+                          focusColor: Color(0xf07d00),
                           border: OutlineInputBorder(),
                           labelText: 'Enter your mobile Number',
                         ),
-                        onChanged: (text){
+                        onChanged: (text) {
                           number = text;
                         },
                       ),
