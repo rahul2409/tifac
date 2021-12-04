@@ -109,6 +109,10 @@ class _ReportPageState extends State<ReportPage> {
 
   void openCheckout() async {
     print('$mobile - mobile number and email id is - $email');
+
+    // Generate order id. 
+
+    // Pass the generated order id in the function. 
     var options = {
       'key': 'rzp_test_L2FaKIIvbKIEaU',
       'amount': num.parse(widget.report.price) * 100,
@@ -130,6 +134,8 @@ class _ReportPageState extends State<ReportPage> {
   }
 
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
+    // Once the response is delivered change the orderdetails
+  
     Fluttertoast.showToast(
         msg: "SUCCESS: " + response.paymentId!,
         toastLength: Toast.LENGTH_SHORT);

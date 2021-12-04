@@ -49,15 +49,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       body: _widgetOptions[_selectedIndex],
-      bottomNavigationBar: new Theme(
+      bottomNavigationBar: Theme(
         data: Theme.of(context).copyWith(
             // sets the background color of the `BottomNavigationBar`
             canvasColor: Color.fromRGBO(0, 81, 154, 1),
             // sets the active color of the `BottomNavigationBar` if `Brightness` is light
             primaryColor: Color.fromRGBO(240, 125, 0, 1),
             textTheme: Theme.of(context).textTheme.copyWith(
-                caption: new TextStyle(color: Color.fromRGBO(240, 125, 0, 1)))),
-        child: new BottomNavigationBar(
+                caption: TextStyle(color: Color.fromRGBO(240, 125, 0, 1)))),
+        child:  BottomNavigationBar(
           currentIndex: _selectedIndex,
           // backgroundColor: Color.fromRGBO(240, 125, 0, 1),
           onTap: _onItemTapped,

@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
         // foregroundColor: Color.fromRGBO(240, 125, 0, 1),
         // foregroundColor: Color.fromRGBO(5, 0, 154, 1),
         //  foregroundColor: Color(0xf07d00),
-        leading: Image.asset('assets/tifactoplogo.png'),
+        leading: Image.asset('assets/tifactoplogo.jpg'),
 
         actions: [
           IconButton(
