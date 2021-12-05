@@ -18,7 +18,6 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  @override
   late Razorpay _razorpay;
   String userID = "";
   String mobile = "";
@@ -29,8 +28,9 @@ class _ReportPageState extends State<ReportPage> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.report.reportname),
-        backgroundColor: const Color.fromRGBO(5, 0, 154, 1),
+        title: const Text('Report Details'),
+        foregroundColor: const Color.fromRGBO(219, 115, 14, 1),
+        backgroundColor: Colors.white,
       ),
       bottomNavigationBar: BottomAppBar(
         child: SizedBox(
@@ -52,6 +52,12 @@ class _ReportPageState extends State<ReportPage> {
         ),
       ),
       body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/TIFAC_Mobile_Application/Background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         height: height,
         child: ListView(
           children: [
@@ -59,34 +65,59 @@ class _ReportPageState extends State<ReportPage> {
               title: Text(
                 widget.report.reportname,
                 style: const TextStyle(
-                  fontSize: 25,
+                  fontSize: 18,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.all(15.0),
+              padding: const EdgeInsets.only(bottom: 10.0),
               child: Image.network(
                 widget.report.reportimagepath,
                 width: width,
-                height: height / 3,
+                height: height / 3.5,
               ),
-            ),
-            ListTile(
-              title: const Text('Year Of Publishing '),
-              trailing: Text(widget.report.yearofpublication),
-            ),
-            ListTile(
-              title: const Text('Category Of Report'),
-              trailing: Text(widget.report.category),
             ),
             Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: ExpansionTile(
-                title: const Text('Excerpt'),
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.report.excerpt),
+                  const Text(
+                    'Year Of Publishing',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  Text(widget.report.yearofpublication),
                 ],
               ),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.only(left: 15.0, right: 15.0, top: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text(
+                    'Category Of Report',
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                  Text(widget.report.category),
+                ],
+              ),
+            ),
+            ExpansionTile(
+              title: const Text('Excerpt'),
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                  ),
+                  child: Text(widget.report.excerpt),
+                ),
+              ],
             ),
           ],
         ),
@@ -196,10 +227,10 @@ class _ReportPageState extends State<ReportPage> {
       Fluttertoast.showToast(
           msg: "SUCCESS:  ${paymentSuccessResponse.paymentId!} and ${orderId}.",
           toastLength: Toast.LENGTH_SHORT);
-    }
-    else {
+    } else {
       Fluttertoast.showToast(
-          msg: "Failed updation:  ${paymentSuccessResponse.paymentId!} and ${orderId}.",
+          msg:
+              "Failed updation:  ${paymentSuccessResponse.paymentId!} and ${orderId}.",
           toastLength: Toast.LENGTH_SHORT);
     }
   }

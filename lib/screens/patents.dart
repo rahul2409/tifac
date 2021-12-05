@@ -17,10 +17,17 @@ class _PatentsState extends State<Patents> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromRGBO(5, 0, 154, 1),
+        backgroundColor: Colors.white,
         title: Text('Patent Filing'),
+        foregroundColor: const Color.fromRGBO(219, 115, 14, 1),
       ),
       body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/TIFAC_Mobile_Application/Background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Center(
           child: Text(
             'Coming Soon...',

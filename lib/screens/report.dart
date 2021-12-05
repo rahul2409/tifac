@@ -16,7 +16,6 @@ class _ReportsState extends State<Reports> {
   bool _loading = false;
   Widget appBarTitle = const Text(
     "Reports",
-    style: TextStyle(color: Colors.white),
   );
   final TextEditingController _controller = new TextEditingController();
   List<Report> _list = [];
@@ -47,14 +46,22 @@ class _ReportsState extends State<Reports> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        foregroundColor: Color.fromRGBO(219, 115, 14, 1),
+        backgroundColor: Colors.white,
         title: appBarTitle,
-        backgroundColor: Color.fromRGBO(5, 0, 154, 1),
       ),
       body: _loading
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      'assets/TIFAC_Mobile_Application/Background.jpg'),
+                  fit: BoxFit.cover,
+                ),
+              ),
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               child: (_report.success == 0)
@@ -76,7 +83,7 @@ class _ReportsState extends State<Reports> {
             ),
     );
   }
-  
+
   void _OpenReport(BuildContext context, Report report) {
     Navigator.push(
       context,
