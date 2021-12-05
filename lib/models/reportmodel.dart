@@ -30,6 +30,7 @@ class ReportModel {
 
 class Report {
     Report({
+        required this.reportid,
         required this.reportname,
         required this.excerpt,
         required this.reportimagepath,
@@ -38,6 +39,7 @@ class Report {
         required this.category,
     });
 
+    String reportid;
     String reportname;
     String excerpt;
     String reportimagepath;
@@ -46,6 +48,7 @@ class Report {
     String category;
 
     factory Report.fromJson(Map<String, dynamic> json) => Report(
+        reportid: json["reportid"],
         reportname: json["reportname"],
         excerpt: json["excerpt"],
         reportimagepath: json["reportimagepath"],
@@ -55,6 +58,7 @@ class Report {
     );
 
     Map<String, dynamic> toJson() => {
+        "reportid": reportid,
         "reportname": reportname,
         "excerpt": excerpt,
         "reportimagepath": reportimagepath,

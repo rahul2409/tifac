@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:razorpay_flutter/razorpay_flutter.dart';
+import 'package:tifac/models/create_order_id.dart';
 import 'package:tifac/models/reportmodel.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:tifac/services/shared_preferences.dart';
@@ -16,6 +20,7 @@ class ReportPage extends StatefulWidget {
 class _ReportPageState extends State<ReportPage> {
   @override
   late Razorpay _razorpay;
+  String userID = "";
   String mobile = "";
   String email = "";
   @override
@@ -94,6 +99,7 @@ class _ReportPageState extends State<ReportPage> {
     // TODO: implement initState
     super.initState();
     mobile = UserSharedPreferences.getUsername()!;
+    userID = UserSharedPreferences.getUsername()!;
     email = UserSharedPreferences.getEmail()!;
     _razorpay = Razorpay();
     _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
@@ -107,12 +113,31 @@ class _ReportPageState extends State<ReportPage> {
     _razorpay.clear();
   }
 
+  Future<http.Response> createOrderId(String userID, String reportID) {
+    return http.get(
+      Uri.parse(
+          "https://tifac.wipurl.com/index.php/orderid/${userID}/${reportID}"),
+    );
+  }
+
+  late String orderId = "";
   void openCheckout() async {
     print('$mobile - mobile number and email id is - $email');
 
-    // Generate order id. 
+    // Generate order id.
+    http.Response response =
+        await createOrderId(userID, widget.report.reportid);
+    print(response.toString());
+    if (response.statusCode == 200) {
+      final responseBody = response.body;
+      print(responseBody);
+      var orderIdFromResponse = jsonDecode(responseBody);
+      print(
+          "${orderIdFromResponse["success"]} and the orderid is ${orderIdFromResponse["orderid"]}");
+      orderId = orderIdFromResponse["orderid"];
+    }
 
-    // Pass the generated order id in the function. 
+    // Passed the generated order id in the function.
     var options = {
       'key': 'rzp_test_L2FaKIIvbKIEaU',
       'amount': num.parse(widget.report.price) * 100,
@@ -120,7 +145,7 @@ class _ReportPageState extends State<ReportPage> {
       'description': widget.report.reportname,
       'retry': {'enabled': true, 'max_count': 2},
       'send_sms_hash': true,
-      'prefill': {'contact': mobile, 'email': email },
+      'prefill': {'contact': mobile, 'email': email},
       'external': {
         'wallets': ['paytm']
       }
@@ -133,12 +158,50 @@ class _ReportPageState extends State<ReportPage> {
     }
   }
 
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
+  Future<bool> updateOrderId(String? paymentId, String orderId) async {
+    var apiUrl = "https://tifac.wipurl.com/index.php/updateorder";
+    Map updatedOrder = {
+      "orderid": orderId,
+      "paymentid": paymentId,
+    };
+    print(jsonEncode(updatedOrder));
+    final response = await http.post(
+      Uri.parse(apiUrl),
+      body: jsonEncode(updatedOrder),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+    );
+    if (response.statusCode == 200) {
+      print(response.toString());
+      final responseBody = response.body;
+      print(responseBody);
+      var updatedOrderFromResponse = jsonDecode(responseBody);
+      print(
+          "${updatedOrderFromResponse["success"]} and the order id is ${updatedOrderFromResponse["orderid"]}");
+      if (updatedOrderFromResponse["success"] == 1) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  void _handlePaymentSuccess(
+      PaymentSuccessResponse paymentSuccessResponse) async {
     // Once the response is delivered change the orderdetails
-  
-    Fluttertoast.showToast(
-        msg: "SUCCESS: " + response.paymentId!,
-        toastLength: Toast.LENGTH_SHORT);
+
+    bool response =
+        await updateOrderId(paymentSuccessResponse.paymentId!, orderId);
+    if (response) {
+      Fluttertoast.showToast(
+          msg: "SUCCESS:  ${paymentSuccessResponse.paymentId!} and ${orderId}.",
+          toastLength: Toast.LENGTH_SHORT);
+    }
+    else {
+      Fluttertoast.showToast(
+          msg: "Failed updation:  ${paymentSuccessResponse.paymentId!} and ${orderId}.",
+          toastLength: Toast.LENGTH_SHORT);
+    }
   }
 
   void _handlePaymentError(PaymentFailureResponse response) {
