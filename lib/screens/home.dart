@@ -63,158 +63,121 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        scrollDirection: Axis.vertical,
-        child: Column(
-          children: [
-            // Image Of the Login Screen
-            Container(
-              padding: const EdgeInsets.all(5.0),
-              // color: const Color.fromRGBO(5, 0, 154, 1),
-              color: const Color.fromRGBO(0, 81, 154, 1),
-              child: ListTile(
-                title: const Text(
-                  'TIFAC',
-                  style: TextStyle(color: Color.fromRGBO(240, 125, 0, 1)),
-                ),
-                isThreeLine: true,
-                contentPadding: const EdgeInsets.all(10),
-                subtitle: const Text(
-                  'Technology Information, Forecasting and Assessment Council(TIFAC) is an autonomous body under Department of Science and Technology, Government of India. Since its inception in 1988, TIFAC has been doing significant contribution as a unique knowledge network institution in India.',
-                  style: TextStyle(color: Colors.white),
-                ),
-                trailing: Icon(Icons.arrow_right),
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (builder) => const AboutTifac(),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => const FuturisticTechno(),
-                        ),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: const Text(
-                      'Futuristic Technologies',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    color: const Color.fromRGBO(5, 0, 154, 1),
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/TIFAC_Mobile_Application/Background.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              // Image Of the Login Screen
+              Container(
+                padding: const EdgeInsets.all(5.0),
+                child: ListTile(
+                  title: const Text(
+                    'TIFAC',
+                    style: TextStyle(color: Color.fromRGBO(240, 125, 0, 1)),
                   ),
-                ),
-              ],
-            ),
-
-            SafeArea(
-              child: SizedBox(
-                width: double.infinity,
-                height: 250,
-                child: GridView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: dummyData.length,
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: width),
-                  itemBuilder: (context, index) {
-                    if (index % 2 == 0) {
-                      return GridTile(
-                        child: Padding(
-                          padding: EdgeInsets.all(5.0),
-                          child: Container(
-                            // color: Color.fromRGBO(5, 0, 154, 1),
-                            color: Color.fromRGBO(0, 143, 61, 1),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                              child: Text(
-                                dummyData[index],
-                                style: TextStyle(
-                                    color: Color.fromRGBO(240, 125, 0, 1)),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    } else {
-                      return GridTile(
-                        child: Padding(
-                          padding: EdgeInsets.all(5.0),
-                          child: Container(
-                            // color: Color.fromRGBO(5, 0, 154, 1),
-                            color: Color.fromRGBO(0, 81, 154, 1),
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                              child: Text(
-                                dummyData[index],
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ),
-                        ),
-                      );
-                    }
+                  isThreeLine: true,
+                  contentPadding: const EdgeInsets.all(10),
+                  subtitle: const Text(
+                    'Technology Information, Forecasting and Assessment Council(TIFAC) is an autonomous body under Department of Science and Technology, Government of India. Since its inception in 1988, TIFAC has been doing significant contribution as a unique knowledge network institution in India.',
+                  ),
+                  trailing: Icon(Icons.arrow_right),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) => const AboutTifac(),
+                      ),
+                    );
                   },
                 ),
               ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (builder) => Services()));
-                    },
-                    child: const Text(
-                      'Services',
-                      style: TextStyle(
-                        color: Colors.white,
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: MaterialButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (builder) => const FuturisticTechno(),
+                          ),
+                        );
+                      },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0)),
+                      child: const Text(
+                        'Futuristic Technologies',
+                        style: TextStyle(color: Colors.white),
                       ),
+                      color: const Color.fromRGBO(5, 0, 154, 1),
                     ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    color: Color.fromRGBO(5, 0, 154, 1),
-                  ),
-                  MaterialButton(
-                    onPressed: () async {
-                      const url =
-                          'https://tifac.org.in/index.php/media-corner/events';
-                      if (await canLaunch(url)) {
-                        await launch(url);
-                      } else {
-                        throw 'Could not launch $url';
-                      }
-                    },
-                    child: Text(
-                      'Events',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0)),
-                    color: Color.fromRGBO(5, 0, 154, 1),
                   ),
                 ],
               ),
-            ),
-          ],
+
+              SafeArea(
+                child: SizedBox(
+                  width: double.infinity,
+                  height: 250,
+                  child: GridView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: dummyData.length,
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: width),
+                    itemBuilder: (context, index) {
+                      if (index % 2 == 0) {
+                        return GridTile(
+                          child: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Container(
+                              // color: Color.fromRGBO(5, 0, 154, 1),
+                              color: Color.fromRGBO(0, 143, 61, 1),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                                child: Text(
+                                  dummyData[index],
+                                  style: TextStyle(
+                                      color: Color.fromRGBO(240, 125, 0, 1)),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return GridTile(
+                          child: Padding(
+                            padding: EdgeInsets.all(5.0),
+                            child: Container(
+                              // color: Color.fromRGBO(5, 0, 154, 1),
+                              color: Color.fromRGBO(0, 81, 154, 1),
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 5.0, right: 5.0),
+                                child: Text(
+                                  dummyData[index],
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+
+              
+            ],
+          ),
         ),
       ),
     );

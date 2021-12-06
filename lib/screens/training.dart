@@ -16,9 +16,9 @@ class _TrainingState extends State<Training> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Training'),
+        title: const Text('Training'),
         backgroundColor: Colors.white,
-        foregroundColor: Color.fromRGBO(219, 115, 14, 1),
+        foregroundColor: const Color.fromRGBO(219, 115, 14, 1),
       ),
       body: Container(
         decoration: const BoxDecoration(

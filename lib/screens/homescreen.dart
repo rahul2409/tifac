@@ -5,10 +5,13 @@ import 'package:tifac/screens/experts.dart';
 import 'package:tifac/screens/futuristic_technologies.dart';
 import 'package:tifac/screens/home.dart';
 import 'package:tifac/screens/innovators.dart';
+import 'package:tifac/screens/launch_events.dart';
 import 'package:tifac/screens/patents.dart';
 import 'package:tifac/screens/report.dart';
+import 'package:tifac/screens/services.dart';
 import 'package:tifac/screens/training.dart';
 import 'package:tifac/screens/utilities/drawer.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -26,14 +29,20 @@ class _HomeScreenState extends State<HomeScreen> {
   String number = "";
   int _selectedIndex = 0;
   TextStyle optionStyle = TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  List _widgetOptions = [
+  final List _widgetOptions = [
     const Home(),
-    const Reports(),
-    const Patents(),
-    const Training(),
-    const JoinAsExpert(),
-    const JoinAsInnovators(),
+    const Services(),
+    const LaunchEvents(),
   ];
+
+  void launchEvents() async {
+    const url = 'https://tifac.org.in/index.php/media-corner/events';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     void _onItemTapped(int index) {
       setState(() {
         _selectedIndex = index;
+        if(index == 2) launchEvents();
         print(_selectedIndex);
       });
     }
@@ -57,14 +67,15 @@ class _HomeScreenState extends State<HomeScreen> {
             primaryColor: Color.fromRGBO(240, 125, 0, 1),
             textTheme: Theme.of(context).textTheme.copyWith(
                 caption: TextStyle(color: Color.fromRGBO(240, 125, 0, 1)))),
-        child:  BottomNavigationBar(
+        child: BottomNavigationBar(
           currentIndex: _selectedIndex,
+          type: BottomNavigationBarType.shifting,
           // backgroundColor: Color.fromRGBO(240, 125, 0, 1),
           onTap: _onItemTapped,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/Tifac_icons_logo/Home.png',
+                'assets/TIFAC_Mobile_Application/Bottom_Icons/Home.png',
                 height: 40.0,
                 // color: Color.fromRGBO(5, 0, 154, 1),
                 width: 40.0,
@@ -74,48 +85,21 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/Tifac_icons_logo/Reports.png',
+                'assets/TIFAC_Mobile_Application/Bottom_Icons/Services.png',
                 height: 40.0,
                 //    color: Color.fromRGBO(5, 0, 154, 1),
                 width: 40.0,
               ),
-              label: 'Reports',
+              label: 'Services',
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                'assets/Tifac_icons_logo/Patent_filling.png',
+                'assets/TIFAC_Mobile_Application/Bottom_Icons/Events.png',
                 height: 40.0,
                 //   color: Color.fromRGBO(5, 0, 154, 1),
                 width: 40.0,
               ),
-              label: 'Patent Filing',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/Tifac_icons_logo/Training.png',
-                height: 40.0,
-                //   color: Color.fromRGBO(5, 0, 154, 1),
-                width: 40.0,
-              ),
-              label: 'Training',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/Tifac_icons_logo/Join_as_expert.png',
-                height: 40.0,
-                //    color: Color.fromRGBO(5, 0, 154, 1),
-                width: 40.0,
-              ),
-              label: 'Experts',
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                'assets/Tifac_icons_logo/Join_as_Innovator.png',
-                height: 40.0,
-                //   color: Color.fromRGBO(5, 0, 154, 1),
-                width: 40.0,
-              ),
-              label: 'Innovators',
+              label: 'Events',
             ),
           ],
         ),
