@@ -237,7 +237,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  iconSize: height / 10,
+                                  iconSize: height / 11,
                                   icon: Image.asset(
                                     'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Enernet.png',
                                     fit: BoxFit.cover,
@@ -266,7 +266,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  iconSize: height / 10,
+                                  iconSize: height / 11,
                                   icon: Image.asset(
                                     'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Robotic-Bees.png',
                                     fit: BoxFit.cover,
@@ -284,7 +284,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  iconSize: height / 10,
+                                  iconSize: height / 11,
                                   icon: Image.asset(
                                     'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Molucular-Manufacturing.png',
                                     fit: BoxFit.cover,
@@ -302,7 +302,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  iconSize: height / 10,
+                                  iconSize: height / 11,
                                   icon: Image.asset(
                                     'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Hearables.png',
                                     fit: BoxFit.cover,
@@ -320,7 +320,7 @@ class _HomeState extends State<Home> {
                               children: [
                                 IconButton(
                                   onPressed: () {},
-                                  iconSize: height / 10,
+                                  iconSize: height / 11,
                                   icon: Image.asset(
                                     'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Immersive-Virtual-Reality.png',
                                     fit: BoxFit.cover,
