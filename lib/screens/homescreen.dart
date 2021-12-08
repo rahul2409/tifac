@@ -69,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 caption: TextStyle(color: Color.fromRGBO(240, 125, 0, 1)))),
         child: BottomNavigationBar(
           currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.shifting,
+          type: BottomNavigationBarType.fixed,
           // backgroundColor: Color.fromRGBO(240, 125, 0, 1),
           onTap: _onItemTapped,
           items: <BottomNavigationBarItem>[

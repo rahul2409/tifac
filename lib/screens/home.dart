@@ -5,6 +5,7 @@ import 'package:tifac/screens/about_tifac.dart';
 import 'package:tifac/screens/futuristic_technologies.dart';
 import 'package:tifac/screens/services.dart';
 import 'package:tifac/screens/utilities/user_profile.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Home extends StatefulWidget {
@@ -28,6 +29,7 @@ class _HomeState extends State<Home> {
     '\n\nPlasmonics: \n\nPlasmonics combines the best aspects of optical and electronic data transfer. Bycrowding light into metal structures with dimensions far smaller than its wavelength, data can be transmitted at much higher frequencies such as terahertz frequencies, whichlie between microwaves and infrared light. Terahertz imaging is useful for non-destructive testing, such as detection of anthrax bacterial weapons in packaging or examination of insulation in spacecraft. It shows potential to make wireless devices 1,000 times faster than they are today.'
   ];
   double height = 0;
+  CarouselController controller = CarouselController();
   double width = 0;
   @override
   Widget build(BuildContext context) {
@@ -70,36 +72,52 @@ class _HomeState extends State<Home> {
             fit: BoxFit.cover,
           ),
         ),
+        height: height,
         child: SingleChildScrollView(
+          physics: const ClampingScrollPhysics(),
           scrollDirection: Axis.vertical,
           child: Column(
             children: [
               // Image Of the Login Screen
               Container(
                 padding: const EdgeInsets.all(5.0),
-                child: ListTile(
-                  title: const Text(
-                    'TIFAC',
-                    style: TextStyle(color: Color.fromRGBO(240, 125, 0, 1)),
+                child: const Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Text(
+                    'Technology Information, Forecasting and Assessment Council(TIFAC) is an autonomous body under Department of Science and Technology, Government of India.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  isThreeLine: true,
-                  contentPadding: const EdgeInsets.all(10),
-                  subtitle: const Text(
-                    'Technology Information, Forecasting and Assessment Council(TIFAC) is an autonomous body under Department of Science and Technology, Government of India. Since its inception in 1988, TIFAC has been doing significant contribution as a unique knowledge network institution in India.',
+                ),
+              ),
+
+              Center(
+                child: MaterialButton(
+                  child: const Text(
+                    'Read More',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
                   ),
-                  trailing: Icon(Icons.arrow_right),
-                  onTap: () {
+                  color: const Color.fromRGBO(9, 0, 214, 1),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0)),
+                  onPressed: () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (builder) => const AboutTifac(),
+                        builder: (builder) => AboutTifac(),
                       ),
                     );
                   },
                 ),
               ),
+
               Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -116,66 +134,269 @@ class _HomeState extends State<Home> {
                           borderRadius: BorderRadius.circular(10.0)),
                       child: const Text(
                         'Futuristic Technologies',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20.0,
+                        ),
                       ),
-                      color: const Color.fromRGBO(5, 0, 154, 1),
+                      color: const Color.fromRGBO(219, 115, 14, 1),
                     ),
                   ),
                 ],
               ),
 
-              SafeArea(
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 250,
-                  child: GridView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: dummyData.length,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: width),
-                    itemBuilder: (context, index) {
-                      if (index % 2 == 0) {
-                        return GridTile(
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Container(
-                              // color: Color.fromRGBO(5, 0, 154, 1),
-                              color: Color.fromRGBO(0, 143, 61, 1),
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                                child: Text(
-                                  dummyData[index],
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(240, 125, 0, 1)),
+              CarouselSlider(
+                items: [
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      color: Colors.transparent,
+                      child: GridView.count(
+                        crossAxisCount: 3,
+                        children: [
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 11,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Plasmonics.png',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
+                                const Text('Plasmonics'),
+                              ],
                             ),
                           ),
-                        );
-                      } else {
-                        return GridTile(
-                          child: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: Container(
-                              // color: Color.fromRGBO(5, 0, 154, 1),
-                              color: Color.fromRGBO(0, 81, 154, 1),
-                              child: Padding(
-                                padding: EdgeInsets.only(left: 5.0, right: 5.0),
-                                child: Text(
-                                  dummyData[index],
-                                  style: TextStyle(color: Colors.white),
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 11,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Bionic-Leaf.png',
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                              ),
+                                const Text('Bionic Leaf'),
+                              ],
                             ),
                           ),
-                        );
-                      }
-                    },
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 11,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Synthetic-Biology.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text('Synthetic Biology'),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 11,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Biomimetics.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text('Biomimetics'),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 11,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Brain-Computer-Interface.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text(
+                                  'Brain Computer Interface',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 10,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Enernet.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text(
+                                  'Enernet',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Container(
+                      color: Colors.transparent,
+                      child: GridView.count(
+                        crossAxisCount: 3,
+                        children: [
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 10,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Robotic-Bees.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text(
+                                  'Robotic Bees',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 10,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Molucular-Manufacturing.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text(
+                                  'Molucular ...',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 10,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Hearables.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text(
+                                  'Hearables',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            child: Column(
+                              children: [
+                                IconButton(
+                                  onPressed: () {},
+                                  iconSize: height / 10,
+                                  icon: Image.asset(
+                                    'assets/TIFAC_Mobile_Application/Futuristic_Technologies_Icon/Immersive-Virtual-Reality.png',
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                const Text(
+                                  'Immersive Virtual Reality',
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+                carouselController: controller,
+                options: CarouselOptions(
+                  enableInfiniteScroll: false,
+                  enlargeCenterPage: true,
+                  viewportFraction: 1,
+                  height: height / 3,
                 ),
               ),
 
-              
+              // SafeArea(
+              //   child: SizedBox(
+              //     width: double.infinity,
+              //     height: 250,
+              //     child: GridView.builder(
+              //       scrollDirection: Axis.horizontal,
+              //       itemCount: dummyData.length,
+              //       gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              //           maxCrossAxisExtent: width),
+              //       itemBuilder: (context, index) {
+              //         if (index % 2 == 0) {
+              //           return GridTile(
+              //             child: Padding(
+              //               padding: EdgeInsets.all(5.0),
+              //               child: Container(
+              //                 // color: Color.fromRGBO(5, 0, 154, 1),
+              //                 color: Color.fromRGBO(0, 143, 61, 1),
+              //                 child: Padding(
+              //                   padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              //                   child: Text(
+              //                     dummyData[index],
+              //                     style: TextStyle(
+              //                         color: Color.fromRGBO(240, 125, 0, 1)),
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //           );
+              //         } else {
+              //           return GridTile(
+              //             child: Padding(
+              //               padding: EdgeInsets.all(5.0),
+              //               child: Container(
+              //                 // color: Color.fromRGBO(5, 0, 154, 1),
+              //                 color: Color.fromRGBO(0, 81, 154, 1),
+              //                 child: Padding(
+              //                   padding: EdgeInsets.only(left: 5.0, right: 5.0),
+              //                   child: Text(
+              //                     dummyData[index],
+              //                     style: TextStyle(color: Colors.white),
+              //                   ),
+              //                 ),
+              //               ),
+              //             ),
+              //           );
+              //         }
+              //       },
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
