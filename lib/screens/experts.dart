@@ -37,7 +37,8 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
         : Scaffold(
             appBar: AppBar(
               title: const Text('Join As an Expert'),
-              backgroundColor: Color.fromRGBO(5, 0, 154, 1),
+              foregroundColor: Color.fromRGBO(240, 125, 0, 1),
+              backgroundColor: Colors.white,
             ),
             // drawer: const DrawerTifac(),
             body: SizedBox(
