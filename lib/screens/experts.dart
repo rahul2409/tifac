@@ -17,13 +17,19 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
   double height = 0;
   double width = 0;
   String name = "";
+  String emailProfessional = "";
   String email = "";
-  String city = "";
   String username = "";
   String designation = "";
   String qualification = "";
   String specification = "";
   String field = "";
+  String landline = "";
+  String subdomain = "";
+  String briefWriteUp = "";
+  String fellowships = "";
+  String linkedInUrl = "";
+  int noOfPublications = 0;
   int numberofyears = 0;
   bool loading = false;
   AddInnovator _addInnovator = AddInnovator(success: 0, userid: 0);
@@ -81,10 +87,33 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
-                          labelText: 'Enter your email address',
+                          labelText: 'Enter your personal email address',
                         ),
                         onChanged: (text) {
                           email = text;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Professional Email Id
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width - 30,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter your Professional email address',
+                        ),
+                        onChanged: (text) {
+                          emailProfessional = text;
                         },
                       ),
                     ),
@@ -132,28 +161,6 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                       ),
                     ),
                   ),
-                  // City
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 20,
-                      right: 20,
-                      top: 12,
-                    ),
-                    child: Container(
-                      width: width - 30,
-                      alignment: Alignment.center,
-                      child: TextField(
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          labelText: 'Enter your City',
-                        ),
-                        onChanged: (text) {
-                          city = text;
-                        },
-                      ),
-                    ),
-                  ),
-
                   // Qualification
                   Padding(
                     padding: const EdgeInsets.only(
@@ -241,6 +248,138 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                     ),
                   ),
 
+                  // Landline Number
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width - 30,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Landline',
+                        ),
+                        onChanged: (text) {
+                          landline = text;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // subdomains
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width - 30,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter Subdomain',
+                        ),
+                        onChanged: (text) {
+                          subdomain = text;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // briefwriteup
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width - 30,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter a Brief Description',
+                        ),
+                        onChanged: (text) {
+                          briefWriteUp = text;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // fellowships
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width - 30,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter fellowships',
+                        ),
+                        onChanged: (text) {
+                          fellowships = text;
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // noofpublications
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width - 30,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter number of publications',
+                        ),
+                        onChanged: (text) {
+                          noOfPublications = int.parse(text);
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // LinkedInUrl
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      left: 20,
+                      right: 20,
+                      top: 12,
+                    ),
+                    child: Container(
+                      width: width - 30,
+                      alignment: Alignment.center,
+                      child: TextField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Enter linkedin url',
+                        ),
+                        onChanged: (text) {
+                          linkedInUrl = text;
+                        },
+                      ),
+                    ),
+                  ),
+                  // Material Button.
                   Padding(
                     padding: const EdgeInsets.only(
                       left: 20,
@@ -255,16 +394,22 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
                           setState(() {
                             loading = true;
                           });
-                          final AddInnovator addInnovator = await addInnovators(
+                          AddInnovator addInnovator = await addInnovators(
                               name,
                               email,
-                              city,
                               username,
                               designation,
                               qualification,
                               specification,
                               field,
-                              numberofyears);
+                              numberofyears,
+                              landline,
+                              subdomain,
+                              briefWriteUp,
+                              emailProfessional,
+                              fellowships,
+                              noOfPublications,
+                              linkedInUrl: (linkedInUrl == "") ? null: linkedInUrl);
                           setState(() {
                             loading = false;
                             _addInnovator = addInnovator;
@@ -299,27 +444,40 @@ class _JoinAsExpertState extends State<JoinAsExpert> {
           );
   }
 
+  
   Future<AddInnovator> addInnovators(
       String name,
       String email,
-      String city,
       String username,
       String designation,
       String qualification,
       String organisation,
       String expertise,
-      int numberofyears) async {
+      int numberofyears,
+      String landline,
+      String subdomain,
+      String briefwriteups,
+      String emailProfessional,
+      String fellowships,
+      int noOfPublications,
+      {String? linkedInUrl}) async {
     final String apiUrl = "https://tifac.wipurl.com/index.php/addexpert";
     Map addInnovator = {
       "name": name,
-      "email": email,
-      "city": city,
+      "email_personal": email,
+      "email_official": emailProfessional,
+      "mobile": username,
       "designation": designation,
       "qualification": qualification,
       "organization": organisation,
       "expertise": expertise,
       "noofyears": numberofyears,
-      "username": username
+      "landline": landline, 
+      "subdomains":subdomain, 
+      "briefwriteup":briefWriteUp,
+      "fellowships": fellowships,
+      "noofpublications" : noOfPublications,
+      "linkedinurl": linkedInUrl
     };
     final response = await http.post(
       Uri.parse(apiUrl),
