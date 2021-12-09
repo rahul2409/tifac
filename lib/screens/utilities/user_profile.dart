@@ -20,7 +20,8 @@ class _UserProfileState extends State<UserProfile> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('User Information'),
-        backgroundColor: const Color.fromRGBO(5, 0, 154, 1),
+        backgroundColor: Colors.white,
+        foregroundColor: Color.fromRGBO(240, 125, 0, 1),
       ),
       body: SizedBox(
         height: height,
@@ -59,14 +60,12 @@ class _UserProfileState extends State<UserProfile> {
                 child: MaterialButton(
                   onPressed: () async {
                     await UserSharedPreferences.clear();
-                    if (UserSharedPreferences.getUsername() == '') {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (builder) => SignUpPage(),
-                        ),
-                      );
-                    }
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (builder) => SignUpPage(),
+                      ),
+                    );
                   },
                   child: const Text(
                     "Logout",
