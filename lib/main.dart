@@ -26,6 +26,7 @@ class MyApp extends StatelessWidget {
     number = UserSharedPreferences.getUsername() ?? '';
     email = UserSharedPreferences.getEmail() ?? '';
     userId = UserSharedPreferences.getUserId() ?? -1;
+    print("${city}, ${name}, ${number}, ${email}, ${userId}");
     if (city != '' &&
         name != '' &&
         number != '' &&
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const SignUpPage(),
+        home: const HomeScreen(),
       );
     } else {
       return MaterialApp(
@@ -46,7 +47,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const HomeScreen(),
+        home: const SignUpPage(),
       );
     }
   }
